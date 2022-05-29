@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\ServiceConnection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @method ServiceConnection|null find($id, $lockMode = null, $lockVersion = null)
