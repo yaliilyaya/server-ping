@@ -18,55 +18,24 @@ class ServerOptionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Item::class);
-    }
-
-    // /**
-    //  * @return Item[] Returns an array of Item objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Item
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
-    /**
-     * @return Item
-     */
-    public function create(): Item
-    {
-        return new Item();
+        parent::__construct($registry, ServerOption::class);
     }
 
     /**
-     * @param Item[] $items
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @return ServerOption
      */
-    public function saveAll(array $items): void
+    public function create(): ServerOption
     {
-        foreach ($items as $item) {
-            $this->getEntityManager()->persist($item);
+        return new ServerOption();
+    }
+
+    /**
+     * @param ServerOption[] $serverOptions
+     */
+    public function saveAll(array $serverOptions): void
+    {
+        foreach ($serverOptions as $serverOption) {
+            $this->getEntityManager()->persist($serverOption);
         }
         $this->getEntityManager()->flush();
     }
@@ -80,13 +49,13 @@ class ServerOptionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Item $item
+     * @param ServerOption $serverOption
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save(Item $item): void
+    public function save(ServerOption $serverOption): void
     {
-        $this->getEntityManager()->persist($item);
+        $this->getEntityManager()->persist($serverOption);
         $this->getEntityManager()->flush();
     }
 
