@@ -7,19 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
  * @ORM
- * @property string $img
- * @property string $url
- * @property string $detail
- * @property string $category
- * @property string $stackSize
- * @property string $salvaging
- * @property float $weight
- * @property int maxCount
- * @property float stackWeight
  */
 class ServiceConnection
 {
-
     /**
      * @var int
      * @ORM\Id
@@ -43,10 +33,9 @@ class ServiceConnection
      */
     private $data = [];
 
-    public function __construct()
-    {
-    }
-
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -60,11 +49,50 @@ class ServiceConnection
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIp(): string
+    {
+        return $this->ip;
+    }
+
+    /**
+     * @param string $ip
+     */
+    public function setIp(string $ip): void
+    {
+        $this->ip = $ip;
+    }
+
+    /**
+     * @return array|null
+     */
     public function getData(): ?array
     {
         return $this->data;
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     */
     public function setData(array $data): self
     {
         $this->data = $data;
@@ -72,25 +100,44 @@ class ServiceConnection
         return $this;
     }
 
+    /**
+     * @param $field
+     * @return mixed|null
+     */
     public function __get($field)
     {
         return $this->data[$field] ?? null;
     }
 
+    /**
+     * @param $field
+     * @param $value
+     * @return void
+     */
     public function __set($field, $value)
     {
         $this->data[$field] = $value;
     }
 
+    /**
+     * @param $field
+     * @return bool
+     */
     public function __isset($field)
     {
         return isset($this->data[$field]);
     }
 
+    /**
+     * @return int[]
+     */
     public function toArray()
     {
         return [
-            'id' => $this->id,
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'ip' => $this->getIp(),
+            'data' => $this->getData(),
         ];
     }
 }
