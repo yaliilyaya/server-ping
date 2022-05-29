@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
- * @ORM
  */
 class ServiceConnection
 {
@@ -30,6 +29,11 @@ class ServiceConnection
      * @ORM\Column(type="string")
      */
     private $ip;
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $status;
     /**
      * @var array
      * @ORM\Column(type="json")
@@ -85,6 +89,22 @@ class ServiceConnection
     }
 
     /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
      * @return array|null
      */
     public function getData(): ?array
@@ -134,7 +154,7 @@ class ServiceConnection
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),

@@ -99,7 +99,7 @@
             "mkdir -p data && chmod 777 data",
             "bin/console doctrine:database:create",
             "chmod 777 data/data.db",
-            "#bin/console --no-interaction doctrine:migrations:migrate -y"
+            "bin/console --no-interaction doctrine:migrations:migrate -y"
         ]
     },
     "conflict": {

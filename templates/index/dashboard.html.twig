@@ -1,18 +1,20 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Название{% endblock %}
+{% block title %}Список сервисов{% endblock %}
 
 {% block page_content %}
 
     <div class="row">
+    {% for serviceConnection in serviceConnections %}
+
         <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
+            <div class="small-box bg-{{ serviceConnection.status }}">
 {#                <div class="small-box bg-success">#}
 {#                <div class="small-box bg-warning">#}
 {#                <div class="small-box bg-danger">#}
                 <div class="inner">
-                    <h3>localhost</h3>
-                    <p>127.0.0.1</p>
+                    <h3>{{ serviceConnection.name }}</h3>
+                    <p>{{ serviceConnection.ip }}</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -20,5 +22,6 @@
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+    {% endfor %}
     </div>
 {% endblock %}
