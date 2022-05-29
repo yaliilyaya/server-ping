@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ItemRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
+ * @ORM
  * @property string $img
  * @property string $url
  * @property string $detail
@@ -29,6 +27,16 @@ class ServiceConnection
      * @ORM\Column(type="integer")
      */
     private $id;
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $name;
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $ip;
     /**
      * @var array
      * @ORM\Column(type="json")
