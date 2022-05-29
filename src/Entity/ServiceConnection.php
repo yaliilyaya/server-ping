@@ -129,7 +129,7 @@ class ServiceConnection
     }
 
     /**
-     * @return int[]
+     * @return array
      */
     public function toArray()
     {
