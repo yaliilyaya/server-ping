@@ -8,10 +8,11 @@
     {% for serviceConnection in serviceConnections %}
 
         <div class="col-lg-3 col-6">
-            <div class="small-box bg-{{ serviceConnection.status }}">
-{#                <div class="small-box bg-success">#}
-{#                <div class="small-box bg-warning">#}
-{#                <div class="small-box bg-danger">#}
+            <a href="/"  class="small-box bg-{{ serviceConnection.status }}">
+{#                <div class="small-box bg-info"> #}
+{#                <div class="small-box bg-success"> #}
+{#                <div class="small-box bg-warning"> #}
+{#                <div class="small-box bg-danger"> #}
                 <div class="inner">
                     <h3>{{ serviceConnection.name }}</h3>
                     <p>{{ serviceConnection.ip }}</p>
@@ -19,8 +20,11 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+                <span class="small-box-footer">
+                    More info
+                    <i class="fas fa-arrow-circle-right"></i>
+                </span>
+            </a>
         </div>
     {% endfor %}
     </div>

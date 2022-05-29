@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping\Index;
  */
 class ServiceConnection
 {
+    const STATUS_INFO_TYPE = 'info';
+    const STATUS_SUCCESS_TYPE = 'success';
+    const STATUS_WARNING_TYPE = 'warning';
+    const STATUS_DANGER_TYPE = 'danger';
     /**
      * @var int
      * @ORM\Id
