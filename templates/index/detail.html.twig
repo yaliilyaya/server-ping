@@ -1,0 +1,165 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Подробная информация | {{ item.label }}{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Подробная информация</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">label</label>
+                            <div class="col-sm-8">
+                                <a href="{{ item.url }}">
+                                    <img src="{{ item.img }}" width="30" height="30" title="{{ item.label }}">
+                                    {{ item.label }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">status</label>
+                            <div class="col-sm-8">
+                               {{ item.status }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">category</label>
+                            <div class="col-sm-8">
+                               {{ item.category }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">stackSize</label>
+                            <div class="col-sm-8">
+                               {{ item.stackSize }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">salvaging</label>
+                            <div class="col-sm-8">
+                               {{ item.salvaging }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">detail</label>
+                            <div class="col-sm-8">
+                                {{ item.detail }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="btn-group-vertical btn-block">
+                            <a href="{{ path('parse.item',{id: item.id}) }}" class="btn btn-default ">Обновить</a>
+                            <a href="{{ path('calculate.item',{id: item.id}) }}" class="btn btn-default ">Рассчитать</a>
+                            <a href="{{ path('export.item',{id: item.id}) }}" class="btn btn-default ">Экспорт</a>
+{#                            <a href="{{ path('job-owner-add') }}" class="btn btn-default ">Добавить собственника</a>#}
+{#                            <a href="{{ path('job-piece-add') }}" class="btn btn-default ">Добавить участок</a>#}
+{#                            <a href="{{ path('job-status-edit') }}" class="btn btn-default ">Начать работы</a>#}
+{#                            <a href="{{ path('job-status-edit') }}" class="btn btn-default ">Закрыть заявку</a>#}
+{#                            <a href="{{ path('job-delete') }}" class="btn btn-danger float-right">Удалить</a>#}
+                        </div>
+                    </div>
+                    <!-- /.card-footer -->
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+            <div class="card card-outline card-info">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Рецепты
+                    </h3>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Рецепт</th>
+                            <th>Здание</th>
+                            <th>Время производства</th>
+                            <th>Вход</th>
+                            <th>Выход</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for recipe in item.recipes %}
+                                <tr>
+                                    <td>{{ recipe.label }}</td>
+                                    <td>{{ recipe.factory }} </td>
+                                    <td>{{ recipe.time }}c</td>
+                                    <td>
+                                        {% set stream = recipe.recipeInStreams[0] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Вход 1'
+                                        } %}
+                                        {% set stream = recipe.recipeInStreams[1] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Вход 2'
+                                        } %}
+                                        {% set stream = recipe.recipeInStreams[2] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Вход 3'
+                                        } %}
+                                        {% set stream = recipe.recipeInStreams[3] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Вход 4'
+                                        } %}
+                                    </td>
+                                    <td>
+                                        {% set stream = recipe.recipeOutStreams[0] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Выход 1'
+                                        } %}
+                                        {% set stream = recipe.recipeOutStreams[1] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Выход 2'
+                                        } %}
+                                        {% set stream = recipe.recipeOutStreams[2] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Вход 3'
+                                        } %}
+                                        {% set stream = recipe.recipeOutStreams[3] | default %}
+                                        {% include 'item/stream.detail.html.twig' with {
+                                            stream: stream,
+                                            label: 'Вход 4'
+                                        } %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{{ path('parse.item', {id: recipe.item.id}) }}"  class="btn btn-info btn-sm">
+                                                <span class="fas fa-spinner"></span>
+                                            </a>
+                                            <a href="{{ path('export.recipe', {id: recipe.id}) }}"  class="btn btn-info btn-sm">
+                                                <span class="fas fa-upload"></span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
