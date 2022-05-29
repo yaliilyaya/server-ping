@@ -4,7 +4,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "7.2",
+        "php": "7.2.34",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -87,20 +87,19 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
+            "@init-dir"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts",
+            "@init-dir"
+        ],
+        "init-dir": [
             "mkdir -p var/cache/dev/page_xml && chmod 777 var/cache/dev/page_xml",
             "mkdir -p public/img && chmod 777 public/img",
             "mkdir -p data && chmod 777 data",
             "bin/console doctrine:database:create",
             "chmod 777 data/data.db",
-            "bin/console --no-interaction doctrine:migrations:migrate"
-        ],
-        "post-update-cmd": [
-            "@auto-scripts",
-            "mkdir -p var/cache/dev/page_xml && chmod 777 var/cache/dev/page_xml",
-            "mkdir -p data && chmod 777 data",
-            "bin/console doctrine:database:create",
-            "chmod 777 data/data.db",
-            "bin/console --no-interaction doctrine:migrations:migrate -y"
+            "#bin/console --no-interaction doctrine:migrations:migrate -y"
         ]
     },
     "conflict": {
