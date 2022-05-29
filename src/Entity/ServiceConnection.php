@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int maxCount
  * @property float stackWeight
  */
-class ServerOption
+class ServiceConnection
 {
 
     /**
@@ -34,11 +34,6 @@ class ServerOption
      * @ORM\Column(type="json")
      */
     private $data = [];
-    /**
-     * @var Collection
-     * @ORM\OneToMany(targetEntity="Recipe", mappedBy="item",  cascade={"persist"})
-     */
-    private $recipes;
 
     public function __construct()
     {
