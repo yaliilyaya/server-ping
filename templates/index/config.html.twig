@@ -4,29 +4,28 @@
 
 {% block page_content %}
 
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Настройка сервиса</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form class="form">
+            <div class="card-body">
 
-{#    <div class="row">#}
-{#    {% for serviceConnection in serviceConnections %}#}
+                <div class="form-group">
+                    {#                    <label for="exampleInputPassword1">Config</label> #}
+                    <textarea class="form-control"
+                              style="height: 1000px"
+                              id="config"
+                              placeholder="Password">{{ config | json_encode(constant('JSON_PRETTY_PRINT')) }}</textarea>
+                </div>
 
-{#        <div class="col-lg-3 col-6">#}
-{#            <a href="/"  class="small-box bg-{{ serviceConnection.status }}">#}
-{#                <div class="small-box bg-info"> #}
-{#                <div class="small-box bg-success"> #}
-{#                <div class="small-box bg-warning"> #}
-{#                <div class="small-box bg-danger"> #}
-{#                <div class="inner">#}
-{#                    <h3>{{ serviceConnection.name }}</h3>#}
-{#                    <p>{{ serviceConnection.ip }}</p>#}
-{#                </div>#}
-{#                <div class="icon">#}
-{#                    <i class="ion ion-bag"></i>#}
-{#                </div>#}
-{#                <span class="small-box-footer">#}
-{#                    More info#}
-{#                    <i class="fas fa-arrow-circle-right"></i>#}
-{#                </span>#}
-{#            </a>#}
-{#        </div>#}
-{#    {% endfor %}#}
-{#    </div>#}
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+            <!-- /.card-footer -->
+        </form>
+    </div>
 {% endblock %}

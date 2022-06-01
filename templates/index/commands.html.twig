@@ -8,15 +8,10 @@
         <div class="card-header">
             <h3 class="card-title">Название</h3>
             <div class="card-tools">
-{#                <a class="btn btn-success btn-sm" href="{{ path('calculate.command') }}" >Рассчитать элементы</a>#}
-{#                <a class="btn btn-success btn-sm" href="{{ path('parse.command.recursive') }}" >Обновить элементы рекурсивно</a>#}
-{#                <a class="btn btn-success btn-sm" href="{{ path('parse.list') }}" >Обновить</a>#}
-
+                <a class="btn btn-success btn-sm" href="{{ path('config', { serviceId:service.id }) }}" >Настройка сервиса</a>
             </div>
         </div>
-
         <div class="card-body">
-
             <div class="tab-content" id="custom-content-below-tabContent">
                 <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="">
                     <table class="table table-striped">
@@ -33,11 +28,7 @@
                         <tbody>
                         {% for key, command in commands %}
                             <tr>
-                                <td>
-                                    <a href="{# {{ path('detail', {id: command.id}) }} #}" target="_blank"  class="btn btn-info btn-sm">
-                                        #{{ command.id }}
-                                    </a>
-                                    </td>
+                                <td>#{{ command.id }}</td>
                                 <td>{{ command.type }}</td>
                                 <td>{{ command.status }}</td>
                                 <td>{{ command.data | json_encode }}</td>

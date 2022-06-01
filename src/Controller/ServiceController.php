@@ -24,10 +24,17 @@ class ServiceController extends AbstractController
     ): Response {
 
         $serviceConnection = $serviceConnectionRepository->find($serviceId);
-        $config = [];
+        $config = [
+            'id' => $serviceConnection->getId(),
+            'name' => $serviceConnection->getName(),
+            'ip' => $serviceConnection->getIp(),
+            'status' => $serviceConnection->getStatus(),
+            'data' => $serviceConnection->getData(),
+        ];
 
         return $this->render('index/config.html.twig', [
-            'service' => $serviceConnection
+            'service' => $serviceConnection,
+            'config' => $config
         ]);
     }
 }

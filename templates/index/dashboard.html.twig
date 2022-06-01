@@ -9,10 +9,6 @@
 
         <div class="col-lg-3 col-6">
             <a href="{{ path('commands', { serviceId:service.id }) }}"  class="small-box bg-{{ service.status }}">
-{#                <div class="small-box bg-info"> #}
-{#                <div class="small-box bg-success"> #}
-{#                <div class="small-box bg-warning"> #}
-{#                <div class="small-box bg-danger"> #}
                 <div class="inner">
                     <h3>{{ service.name }}</h3>
                     <p>{{ service.ip }}</p>
