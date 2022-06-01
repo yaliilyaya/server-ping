@@ -39,6 +39,11 @@ class ServiceConnection
      */
     private $status;
     /**
+     * @var Collection
+     */
+    private $commands;
+
+    /**
      * @var array
      * @ORM\Column(type="json")
      */
@@ -109,6 +114,22 @@ class ServiceConnection
     }
 
     /**
+     * @return Collection
+     */
+    public function getCommands(): Collection
+    {
+        return $this->commands ?? new ArrayCollection();
+    }
+
+    /**
+     * @param Collection $commands
+     */
+    public function setCommands(Collection $commands): void
+    {
+        $this->commands = $commands;
+    }
+
+    /**
      * @return array|null
      */
     public function getData(): ?array
@@ -164,6 +185,7 @@ class ServiceConnection
             'id' => $this->getId(),
             'name' => $this->getName(),
             'ip' => $this->getIp(),
+            'status' => $this->getStatus(),
             'data' => $this->getData(),
         ];
     }

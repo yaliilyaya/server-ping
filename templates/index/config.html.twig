@@ -4,20 +4,23 @@
 
 {% block page_content %}
 
-    <div class="card card-info">
+    <form class="card card-info" method="post">
         <div class="card-header">
             <h3 class="card-title">Настройка сервиса</h3>
+            <div class="card-tools">
+                <button type="submit" class="btn btn-info btn-sm" href="{{ path('config', { serviceId:service.id }) }}" >Сохранить</button>
+            </div>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form class="form">
+        <div class="form" >
             <div class="card-body">
 
                 <div class="form-group">
-                    {#                    <label for="exampleInputPassword1">Config</label> #}
                     <textarea class="form-control"
                               style="height: 1000px"
                               id="config"
+                              name="config"
                               placeholder="Password">{{ config | json_encode(constant('JSON_PRETTY_PRINT')) }}</textarea>
                 </div>
 
@@ -26,6 +29,6 @@
             <div class="card-footer">
             </div>
             <!-- /.card-footer -->
-        </form>
-    </div>
+        </div>
+    </form>
 {% endblock %}
