@@ -20,15 +20,20 @@ class ServiceJob
      */
     private $id;
     /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $type;
-    /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
     private $isActive;
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $result;
+    /**
+     * @var ServiceCommand
+     * @ ORM\Column(type="string")
+     */
+    private $command;
 
     /**
      * @var array
@@ -50,22 +55,6 @@ class ServiceJob
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type ?? '';
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType(string $type): void
-    {
-        $this->type = $type;
     }
 
     /**
@@ -101,6 +90,38 @@ class ServiceJob
         $this->data = $data;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResult(): string
+    {
+        return $this->result ?? '';
+    }
+
+    /**
+     * @param string $result
+     */
+    public function setResult(string $result): void
+    {
+        $this->result = $result;
+    }
+
+    /**
+     * @return ServiceCommand
+     */
+    public function getCommand(): ServiceCommand
+    {
+        return $this->command;
+    }
+
+    /**
+     * @param ServiceCommand $command
+     */
+    public function setCommand(ServiceCommand $command): void
+    {
+        $this->command = $command;
     }
 
     /**

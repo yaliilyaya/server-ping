@@ -35,11 +35,6 @@ class ServiceCommand
      * @ORM\Column(type="json")
      */
     private $data = [];
-    /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $result;
 
     /**
      * @return int|null
@@ -106,22 +101,6 @@ class ServiceCommand
         $this->data = $data;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResult(): string
-    {
-        return $this->result ?? '';
-    }
-
-    /**
-     * @param string $result
-     */
-    public function setResult(string $result): void
-    {
-        $this->result = $result;
     }
 
     /**
