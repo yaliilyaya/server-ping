@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @see Route
  */
-class CommandListController extends AbstractController
+class CommandController extends AbstractController
 {
     /**
      * @Route("/commands/{serviceId}", name="commands")
