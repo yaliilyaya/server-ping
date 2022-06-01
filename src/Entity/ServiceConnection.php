@@ -12,10 +12,6 @@ use Doctrine\ORM\Mapping\Index;
  */
 class ServiceConnection
 {
-    const STATUS_INFO_TYPE = 'info';
-    const STATUS_SUCCESS_TYPE = 'success';
-    const STATUS_WARNING_TYPE = 'warning';
-    const STATUS_DANGER_TYPE = 'danger';
     /**
      * @var int
      * @ORM\Id
@@ -41,7 +37,7 @@ class ServiceConnection
     /**
      * @var Collection
      */
-    private $commands;
+    private $jobs;
 
     /**
      * @var array
@@ -116,17 +112,17 @@ class ServiceConnection
     /**
      * @return Collection
      */
-    public function getCommands(): Collection
+    public function getJobs(): Collection
     {
-        return $this->commands ?? new ArrayCollection();
+        return $this->jobs ?? new ArrayCollection();
     }
 
     /**
-     * @param Collection $commands
+     * @param Collection $jobs
      */
-    public function setCommands(Collection $commands): void
+    public function setJobs(Collection $jobs): void
     {
-        $this->commands = $commands;
+        $this->jobs = $jobs;
     }
 
     /**

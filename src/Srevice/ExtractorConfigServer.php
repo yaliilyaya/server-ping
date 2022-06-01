@@ -2,8 +2,8 @@
 
 namespace App\Srevice;
 
-use App\Entity\ServiceCommand;
 use App\Entity\ServiceConnection;
+use App\Entity\ServiceJob;
 
 class ExtractorConfigServer
 {
@@ -15,14 +15,13 @@ class ExtractorConfigServer
     {
         $serviceConfig = $service->toArray();
 
-        $commands = $service->getCommands();
-        $commandConfigs = $commands->map(function (ServiceCommand $command) {
+        $jobConfigs = $service->getJobs()->map(function (ServiceJob $job) {
             return [
-                $command->getType() => $command->toArray()
+                $job->getType() => $job->toArray()
             ];
         })->toArray();
 
-        $serviceConfig['commands'] = $commandConfigs;
+        $serviceConfig['jobs'] = $jobConfigs;
         return $serviceConfig;
     }
 }

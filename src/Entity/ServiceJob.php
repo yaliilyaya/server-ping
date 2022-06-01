@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Enum\StatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +10,7 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
  */
-class ServiceCommand
+class ServiceJob
 {
     /**
      * @var int
@@ -26,20 +25,16 @@ class ServiceCommand
      */
     private $type;
     /**
-     * @var string
-     * @ORM\Column(type="string")
+     * @var bool
+     * @ORM\Column(type="boolean")
      */
-    private $status;
+    private $isActive;
+
     /**
      * @var array
      * @ORM\Column(type="json")
      */
     private $data = [];
-    /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $result;
 
     /**
      * @return int|null
@@ -74,19 +69,19 @@ class ServiceCommand
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getStatus(): string
+    public function isActive(): bool
     {
-        return $this->status ?? StatusEnum::DEFAULT_TYPE;
+        return $this->isActive;
     }
 
     /**
-     * @param string $status
+     * @param bool $isActive
      */
-    public function setStatus(string $status): void
+    public function setIsActive(bool $isActive): void
     {
-        $this->status = $status;
+        $this->isActive = $isActive;
     }
 
     /**
@@ -106,22 +101,6 @@ class ServiceCommand
         $this->data = $data;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResult(): string
-    {
-        return $this->result ?? '';
-    }
-
-    /**
-     * @param string $result
-     */
-    public function setResult(string $result): void
-    {
-        $this->result = $result;
     }
 
     /**
@@ -159,8 +138,6 @@ class ServiceCommand
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'ip' => $this->getIp(),
             'data' => $this->getData(),
         ];
     }
