@@ -77,7 +77,7 @@ class ServiceCommand
      */
     public function getStatus(): string
     {
-        return $this->status ?? '';
+        return $this->status ?? self::STATUS_WARNING_TYPE;
     }
 
     /**

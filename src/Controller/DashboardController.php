@@ -15,11 +15,11 @@ class DashboardController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @param ServiceConnectionRepository $serviceConnectionRepository
      * @return Response
      */
     public function index(ServiceConnectionRepository $serviceConnectionRepository): Response
     {
-
         $services = $serviceConnectionRepository->findAll();
 
         return $this->render('index/dashboard.html.twig', [

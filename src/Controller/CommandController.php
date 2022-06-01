@@ -16,6 +16,8 @@ class CommandController extends AbstractController
 {
     /**
      * @Route("/commands/{serviceId}", name="commands")
+     * @param ServiceConnectionRepository $serviceConnectionRepository
+     * @param int $serviceId
      * @return Response
      */
     public function commands(

@@ -7,8 +7,11 @@ use App\Entity\ServiceConnection;
 
 class ExtractorConfigServer
 {
-
-    public function extract(ServiceConnection $service)
+    /**
+     * @param ServiceConnection $service
+     * @return array
+     */
+    public function extract(ServiceConnection $service): array
     {
         $serviceConfig = $service->toArray();
 

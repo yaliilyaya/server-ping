@@ -18,6 +18,10 @@ class ServiceController extends AbstractController
 {
     /**
      * @Route("/config/{serviceId}", name="config")
+     * @param ServiceConnectionRepository $serviceConnectionRepository
+     * @param ExtractorConfigServer $extractorConfigServer
+     * @param Request $request
+     * @param int $serviceId
      * @return Response
      */
     public function config(
