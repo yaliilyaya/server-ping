@@ -12,25 +12,22 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @see Route
  */
-class CommandController extends AbstractController
+class ServiceController extends AbstractController
 {
     /**
-     * @Route("/commands/{serviceId}", name="commands")
+     * @Route("/config/{serviceId}", name="config")
      * @return Response
      */
-    public function commands(
+    public function config(
         ServiceConnectionRepository $serviceConnectionRepository,
         int $serviceId
     ): Response {
 
         $serviceConnection = $serviceConnectionRepository->find($serviceId);
-        $commands = [
-            new ServiceCommand()
-        ];
+        $config = [];
 
-        return $this->render('index/commands.html.twig', [
-            'service' => $serviceConnection,
-            'commands' => $commands
+        return $this->render('index/config.html.twig', [
+            'service' => $serviceConnection
         ]);
     }
 }
