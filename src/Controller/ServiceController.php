@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Entity\ServiceCommand;
-use App\Entity\ServiceCommand;
 use App\Repository\ServiceConnectionRepository;
 use App\Srevice\ExtractorConfigServer;
 use App\Srevice\SaveConfigServer;

@@ -2,16 +2,16 @@
 
 namespace App\Repository;
 
-use App\Entity\ServiceCommand;
+use App\Entity\ServiceConnection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @method ServiceCommand|null find($id, $lockMode = null, $lockVersion = null)
- * @method ServiceCommand|null findOneBy(array $criteria, array $orderBy = null)
- * @method ServiceCommand[]    findAll()
- * @method ServiceCommand[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ServiceConnection|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ServiceConnection|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ServiceConnection[]    findAll()
+ * @method ServiceConnection[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ServiceConnectionRepository extends ServiceEntityRepository
 {
@@ -20,19 +20,19 @@ class ServiceConnectionRepository extends ServiceEntityRepository
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ServiceCommand::class);
+        parent::__construct($registry, ServiceConnection::class);
     }
 
     /**
-     * @return ServiceCommand
+     * @return ServiceConnection
      */
-    public function create(): ServiceCommand
+    public function create(): ServiceConnection
     {
-        return new ServiceCommand();
+        return new ServiceConnection();
     }
 
     /**
-     * @param ServiceCommand[] $serverOptions
+     * @param ServiceConnection[] $serverOptions
      */
     public function saveAll(array $serverOptions): void
     {
@@ -51,9 +51,9 @@ class ServiceConnectionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ServiceCommand $serverOption
+     * @param ServiceConnection $serverOption
      */
-    public function save(ServiceCommand $serverOption): void
+    public function save(ServiceConnection $serverOption): void
     {
         $this->getEntityManager()->persist($serverOption);
         $this->getEntityManager()->flush();

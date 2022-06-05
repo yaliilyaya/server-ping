@@ -3,6 +3,7 @@
 namespace App\Srevice;
 
 use App\Entity\ServiceCommand;
+use App\Entity\ServiceConnection;
 use App\Entity\ServiceJob;
 use App\Enum\StatusEnum;
 
@@ -13,7 +14,7 @@ class SaveConfigServer
      * @return bool
      */
     public function save(
-        ServiceCommand $service,
+        ServiceConnection $service,
                        $config,
                        $saveConfig
     ): bool {
