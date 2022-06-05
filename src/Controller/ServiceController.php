@@ -69,23 +69,25 @@ class ServiceController extends AbstractController
         Request $request,
         int $serviceId
     ): Response {
-        $serviceConnection = $serviceConnectionRepository->find($serviceId);
-        $config = $extractorConfigServer->extract($serviceConnection);
+        $service = $serviceConnectionRepository->find($serviceId);
+        $config = $extractorConfigServer->extract($service);
 
         if ($request->get('config')) {
             $requestConfig = $request->get('config');
             $successSave = $saveConfigServer->save(
-                $serviceConnection,
+                $service,
                 $config,
                 json_decode($requestConfig, true) ?: []
             );
             if ($successSave) {
-                die(__FILE__);
+                return $this->redirectToRoute('jobs', [
+                    'serviceId' => $service->getId()
+                ]);
             }
         }
 
         return $this->render('index/config.html.twig', [
-            'service' => $serviceConnection,
+            'service' => $service,
             'config' => $config
         ]);
     }

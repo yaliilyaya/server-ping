@@ -6,26 +6,38 @@ use App\Entity\ServiceCommand;
 use App\Entity\ServiceConnection;
 use App\Entity\ServiceJob;
 use App\Enum\StatusEnum;
+use App\Repository\ServiceConnectionRepository;
 
 class SaveConfigServer
 {
     /**
-     * @param ServiceCommand $service
+     * @var ServiceConnectionRepository
+     */
+    private $serviceConnectionRepository;
+
+    public function __construct(ServiceConnectionRepository $serviceConnectionRepository)
+    {
+        $this->serviceConnectionRepository = $serviceConnectionRepository;
+    }
+
+    /**
+     * @param ServiceConnection $service
+     * @param array $config
+     * @param array $saveConfig
      * @return bool
      */
     public function save(
         ServiceConnection $service,
-                       $config,
-                       $saveConfig
+        array $config,
+        array $saveConfig
     ): bool {
         $service->setName($saveConfig['name']);
         $service->setIp($saveConfig['ip']);
-        $service->setStatus(StatusEnum::DEFAULT_TYPE);
+        $service->setStatus(StatusEnum::INFO_TYPE);
         $service->setData($saveConfig['data']);
 
-        dump($service);
-        dump($config);
-        dump($saveConfig);
-       return true;
+        $this->serviceConnectionRepository->save($service);
+
+        return true;
     }
 }
