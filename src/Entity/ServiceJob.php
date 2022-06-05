@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
 /**
- * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
+ * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobRepository::class)
  */
 class ServiceJob
 {

@@ -2,37 +2,37 @@
 
 namespace App\Repository;
 
-use App\Entity\ServiceCommand;
+use App\Entity\ServiceJob;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @method ServiceCommand|null find($id, $lockMode = null, $lockVersion = null)
- * @method ServiceCommand|null findOneBy(array $criteria, array $orderBy = null)
- * @method ServiceCommand[]    findAll()
- * @method ServiceCommand[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ServiceJob|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ServiceJob|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ServiceJob[]    findAll()
+ * @method ServiceJob[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ServiceConnectionRepository extends ServiceEntityRepository
+class ServiceJobRepository extends ServiceEntityRepository
 {
     /**
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ServiceCommand::class);
+        parent::__construct($registry, ServiceJob::class);
     }
 
     /**
-     * @return ServiceCommand
+     * @return ServiceJob
      */
-    public function create(): ServiceCommand
+    public function create(): ServiceJob
     {
-        return new ServiceCommand();
+        return new ServiceJob();
     }
 
     /**
-     * @param ServiceCommand[] $serverOptions
+     * @param ServiceJob[] $serverOptions
      */
     public function saveAll(array $serverOptions): void
     {
@@ -51,11 +51,11 @@ class ServiceConnectionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ServiceCommand $serverOption
+     * @param ServiceJob $serviceJob
      */
-    public function save(ServiceCommand $serverOption): void
+    public function save(ServiceJob $serviceJob): void
     {
-        $this->getEntityManager()->persist($serverOption);
+        $this->getEntityManager()->persist($serviceJob);
         $this->getEntityManager()->flush();
     }
 }

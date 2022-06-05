@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\Collection;
  * @method ServiceCommand[]    findAll()
  * @method ServiceCommand[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ServiceConnectionRepository extends ServiceEntityRepository
+class ServiceCommandRepository extends ServiceEntityRepository
 {
     /**
      * @param ManagerRegistry $registry

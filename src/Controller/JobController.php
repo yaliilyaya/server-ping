@@ -25,7 +25,7 @@ class JobController extends AbstractController
         ServiceConnectionRepository $serviceConnectionRepository,
         int $serviceId
     ): Response {
-        /** @var ServiceConnection $serviceConnection */
+        /** @var ServiceCommand $serviceConnection */
         $serviceConnection = $serviceConnectionRepository->find($serviceId);
 
         return $this->render('index/jobs.html.twig', [
