@@ -20,7 +20,7 @@ trait StatusTrait
      */
     public function getStatus(): string
     {
-        return $this->status ?? StatusEnum::DEFAULT_TYPE;
+        return $this->status;
     }
 
     /**

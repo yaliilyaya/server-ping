@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\StatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,6 +34,11 @@ class ServiceJob
      * @ManyToOne(targetEntity="App\Entity\ServiceConnection")
      */
     private $command;
+
+    public function __construct()
+    {
+        $this->setStatus(StatusEnum::DEFAULT_TYPE);
+    }
 
     /**
      * @return string

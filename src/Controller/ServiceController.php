@@ -18,6 +18,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class ServiceController extends AbstractController
 {
     /**
+     * @Route("/newConnection", name="new.connection")
+     * @return Response
+     */
+    public function newConnection(
+        ServiceConnectionRepository $serviceConnectionRepository
+    ): Response {
+        $service = $serviceConnectionRepository->create();
+        $service->setIp('127.0.0.1');
+        $service->setName('Новое подключение');
+
+        dump($service);
+        $serviceConnectionRepository->save($service);
+
+
+        dump($service);
+        die(__FILE__);
+
+        return $this->render('index/config.html.twig', [
+        ]);
+    }
+
+    /**
      * @Route("/config/{serviceId}", name="config")
      * @param ServiceConnectionRepository $serviceConnectionRepository
      * @param ExtractorConfigServer $extractorConfigServer

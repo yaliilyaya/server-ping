@@ -28,7 +28,10 @@ class ServiceConnectionRepository extends ServiceEntityRepository
      */
     public function create(): ServiceConnection
     {
-        return new ServiceConnection();
+        $serviceConnection = new ServiceConnection();
+        $serviceConnection->setIp('127.0.0.1');
+        $serviceConnection->setIsActive(false);
+        return $serviceConnection;
     }
 
     /**

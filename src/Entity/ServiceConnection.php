@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\StatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,15 +29,15 @@ class ServiceConnection
      */
     private $ip;
     /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $status;
-    /**
      * @var Collection
      * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
      */
     private $jobs;
+
+    public function __construct()
+    {
+        $this->setStatus(StatusEnum::DEFAULT_TYPE);
+    }
 
     /**
      * @return string
