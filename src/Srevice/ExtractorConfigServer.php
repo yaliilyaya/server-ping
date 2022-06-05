@@ -30,10 +30,10 @@ class ExtractorConfigServer
     {
         $serviceConfig = $service->toArray();
 
-        $commandConfigs = $this->extractCommandConfigs($this->serviceCommandRepository->findAll());
-        $jobConfigs = $this->extractJobConfigs($service->getJobs());
+//        $commandConfigs = $this->extractCommandConfigs($this->serviceCommandRepository->findAll());
+//        $jobConfigs = $this->extractJobConfigs($service->getJobs());
 
-        $serviceConfig['jobs'] = array_merge($commandConfigs, $jobConfigs);
+        $serviceConfig['jobs'] = $this->extractJobConfigs($service->getJobs());
         return $serviceConfig;
     }
 
@@ -52,21 +52,21 @@ class ExtractorConfigServer
         return $jobConfigs ? array_merge(...$jobConfigs) : [];
     }
 
-    /**
-     * @param array $commands
-     * @return array
-     */
-    private function extractCommandConfigs(array $commands): array
-    {
-        $commandCollection = new ArrayCollection($commands);
-
-        $job = new ServiceJob();
-        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) use ($job) {
-            return [
-                $command->getType() => $job->toArray()
-            ];
-        })->toArray();
-
-        return $commandConfigs ? array_merge(...$commandConfigs) : [];
-    }
+//    /**
+//     * @param array $commands
+//     * @return array
+//     */
+//    private function extractCommandConfigs(array $commands): array
+//    {
+//        $commandCollection = new ArrayCollection($commands);
+//
+//        $job = new ServiceJob();
+//        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) use ($job) {
+//            return [
+//                $command->getType() => $job->toArray()
+//            ];
+//        })->toArray();
+//
+//        return $commandConfigs ? array_merge(...$commandConfigs) : [];
+//    }
 }
