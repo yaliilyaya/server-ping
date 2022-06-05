@@ -12,27 +12,12 @@ use Doctrine\Common\Collections\Collection;
 class ExtractorConfigServer
 {
     /**
-     * @var ServiceCommandRepository
-     */
-    private $serviceCommandRepository;
-
-    public function __construct(ServiceCommandRepository $serviceCommandRepository)
-    {
-
-        $this->serviceCommandRepository = $serviceCommandRepository;
-    }
-
-    /**
      * @param ServiceConnection $service
      * @return array
      */
     public function extract(ServiceConnection $service): array
     {
         $serviceConfig = $service->toArray();
-
-//        $commandConfigs = $this->extractCommandConfigs($this->serviceCommandRepository->findAll());
-//        $jobConfigs = $this->extractJobConfigs($service->getJobs());
-
         $serviceConfig['jobs'] = $this->extractJobConfigs($service->getJobs());
         return $serviceConfig;
     }
@@ -51,22 +36,4 @@ class ExtractorConfigServer
 
         return $jobConfigs ? array_merge(...$jobConfigs) : [];
     }
-
-//    /**
-//     * @param array $commands
-//     * @return array
-//     */
-//    private function extractCommandConfigs(array $commands): array
-//    {
-//        $commandCollection = new ArrayCollection($commands);
-//
-//        $job = new ServiceJob();
-//        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) use ($job) {
-//            return [
-//                $command->getType() => $job->toArray()
-//            ];
-//        })->toArray();
-//
-//        return $commandConfigs ? array_merge(...$commandConfigs) : [];
-//    }
 }
