@@ -17,6 +17,7 @@ class ServiceConnection
     use IdentifierTrait;
     use DataTrait;
     use ActiveTrait;
+    use StatusTrait;
 
     /**
      * @var string
@@ -69,22 +70,6 @@ class ServiceConnection
     public function setIp(string $ip): void
     {
         $this->ip = $ip;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param string $status
-     */
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
     }
 
     /**

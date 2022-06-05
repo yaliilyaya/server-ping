@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220605203026 extends AbstractMigration
+final class Version20220605211217 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,8 +22,8 @@ final class Version20220605203026 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE service_command (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, type VARCHAR(255) NOT NULL, data CLOB NOT NULL --(DC2Type:json)
         , is_active BOOLEAN NOT NULL, status VARCHAR(255) NOT NULL)');
-        $this->addSql('CREATE TABLE service_connection (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, ip VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, data CLOB NOT NULL --(DC2Type:json)
-        , is_active BOOLEAN NOT NULL)');
+        $this->addSql('CREATE TABLE service_connection (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, ip VARCHAR(255) NOT NULL, data CLOB NOT NULL --(DC2Type:json)
+        , is_active BOOLEAN NOT NULL, status VARCHAR(255) NOT NULL)');
         $this->addSql('CREATE TABLE service_job (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, connection_id INTEGER DEFAULT NULL, command_id INTEGER DEFAULT NULL, result VARCHAR(255) NOT NULL, data CLOB NOT NULL --(DC2Type:json)
         , is_active BOOLEAN NOT NULL, status VARCHAR(255) NOT NULL)');
         $this->addSql('CREATE INDEX IDX_D988938FDD03F01 ON service_job (connection_id)');

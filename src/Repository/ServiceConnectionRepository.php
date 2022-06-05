@@ -61,4 +61,10 @@ class ServiceConnectionRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($serverOption);
         $this->getEntityManager()->flush();
     }
+
+    public function delete(ServiceConnection $serverOption)
+    {
+        $this->getEntityManager()->remove($serverOption);
+        $this->getEntityManager()->flush();
+    }
 }
