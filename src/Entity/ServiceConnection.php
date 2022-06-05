@@ -15,6 +15,7 @@ class ServiceConnection
 {
     use IdentifierTrait;
     use DataTrait;
+    use ActiveTrait;
 
     /**
      * @var string

@@ -15,17 +15,15 @@ class ServiceCommand
 {
     use IdentifierTrait;
     use DataTrait;
+    use ActiveTrait;
+    use StatusTrait;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
     private $type;
-    /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $status;
+
 
     /**
      * @return string
@@ -43,21 +41,6 @@ class ServiceCommand
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus(): string
-    {
-        return $this->status ?? StatusEnum::DEFAULT_TYPE;
-    }
-
-    /**
-     * @param string $status
-     */
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
 
     /**
      * @return array

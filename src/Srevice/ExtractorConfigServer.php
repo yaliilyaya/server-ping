@@ -33,6 +33,9 @@ class ExtractorConfigServer
         $commandConfigs = $this->extractCommandConfigs($this->serviceCommandRepository->findAll());
         $jobConfigs = $this->extractJobConfigs($service->getJobs());
 
+        dump($commandConfigs);
+        dump($jobConfigs);
+
         $serviceConfig['jobs'] = $jobConfigs;
         return $serviceConfig;
     }

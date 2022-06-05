@@ -15,12 +15,9 @@ class ServiceJob
 {
     use IdentifierTrait;
     use DataTrait;
+    use ActiveTrait;
+    use StatusTrait;
 
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $isActive;
     /**
      * @var string
      * @ORM\Column(type="string")
@@ -36,22 +33,6 @@ class ServiceJob
      * @ManyToOne(targetEntity="App\Entity\ServiceConnection")
      */
     private $command;
-
-    /**
-     * @return bool
-     */
-    public function isActive(): bool
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @param bool $isActive
-     */
-    public function setIsActive(bool $isActive): void
-    {
-        $this->isActive = $isActive;
-    }
 
     /**
      * @return string
