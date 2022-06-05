@@ -33,10 +33,7 @@ class ExtractorConfigServer
         $commandConfigs = $this->extractCommandConfigs($this->serviceCommandRepository->findAll());
         $jobConfigs = $this->extractJobConfigs($service->getJobs());
 
-        dump($commandConfigs);
-        dump($jobConfigs);
-
-        $serviceConfig['jobs'] = $jobConfigs;
+        $serviceConfig['jobs'] = array_merge($commandConfigs, $jobConfigs);
         return $serviceConfig;
     }
 
@@ -63,9 +60,10 @@ class ExtractorConfigServer
     {
         $commandCollection = new ArrayCollection($commands);
 
-        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) {
+        $job = new ServiceJob();
+        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) use ($job) {
             return [
-                $command->getType() => $command->toArray()
+                $command->getType() => $job->toArray()
             ];
         })->toArray();
 

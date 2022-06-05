@@ -38,6 +38,6 @@ class SaveConfigServer
 
         $this->serviceConnectionRepository->save($service);
 
-        return true;
+        return false;
     }
 }

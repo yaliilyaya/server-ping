@@ -16,7 +16,6 @@ class ServiceCommand
     use IdentifierTrait;
     use DataTrait;
     use ActiveTrait;
-    use StatusTrait;
 
     /**
      * @var string
@@ -41,7 +40,6 @@ class ServiceCommand
         $this->type = $type;
     }
 
-
     /**
      * @return array
      */
@@ -49,8 +47,8 @@ class ServiceCommand
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'ip' => $this->getIp(),
+            'type' => $this->getType(),
+            'is_active' => $this->isActive(),
             'data' => $this->getData(),
         ];
     }

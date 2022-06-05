@@ -79,7 +79,10 @@ class ServiceJob
     {
         return [
             'id' => $this->getId(),
+            'is_active' => $this->isActive(),
             'data' => $this->getData(),
+            'command' => $this->command ? $this->getCommand()->toArray() : null,
+            'result' => $this->getResult(),
         ];
     }
 }
