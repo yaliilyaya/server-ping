@@ -33,7 +33,7 @@ class ServiceJob
     private $connection;
     /**
      * @var ServiceCommand
-     * @ ORM\Column(type="string")
+     * @ManyToOne(targetEntity="App\Entity\ServiceConnection")
      */
     private $command;
 
