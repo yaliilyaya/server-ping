@@ -18,7 +18,6 @@ class ExtractorConfigServer
 
     public function __construct(ServiceCommandRepository $serviceCommandRepository)
     {
-
         $this->serviceCommandRepository = $serviceCommandRepository;
     }
 
@@ -30,10 +29,13 @@ class ExtractorConfigServer
     {
         $serviceConfig = $service->toArray();
 
-//        $commandConfigs = $this->extractCommandConfigs($this->serviceCommandRepository->findAll());
-//        $jobConfigs = $this->extractJobConfigs($service->getJobs());
+        $jobs = array_merge(
+            $this->extractCommandConfigs($this->serviceCommandRepository->findAll()),
+            $this->extractJobConfigs($service->getJobs())
+        );
 
-        $serviceConfig['jobs'] = $this->extractJobConfigs($service->getJobs());
+        $serviceConfig['jobs'] = $jobs;
+
         return $serviceConfig;
     }
 
@@ -49,24 +51,28 @@ class ExtractorConfigServer
             ];
         })->toArray();
 
+        dump($jobConfigs);
+
         return $jobConfigs ? array_merge(...$jobConfigs) : [];
     }
 
-//    /**
-//     * @param array $commands
-//     * @return array
-//     */
-//    private function extractCommandConfigs(array $commands): array
-//    {
-//        $commandCollection = new ArrayCollection($commands);
-//
-//        $job = new ServiceJob();
-//        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) use ($job) {
-//            return [
-//                $command->getType() => $job->toArray()
-//            ];
-//        })->toArray();
-//
-//        return $commandConfigs ? array_merge(...$commandConfigs) : [];
-//    }
+    /**
+     * @param array $commands
+     * @return array
+     */
+    private function extractCommandConfigs(array $commands): array
+    {
+        $commandCollection = new ArrayCollection($commands);
+
+        $commandConfigs = $commandCollection->map(function (ServiceCommand $command) {
+            return [
+                $command->getType() => [
+                    'data' => $command->getData()
+                ]
+            ];
+        })->toArray();
+
+        dump($commandConfigs);
+        return $commandConfigs ? array_merge(...$commandConfigs) : [];
+    }
 }

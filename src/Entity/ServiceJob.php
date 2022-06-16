@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobRepository::class)
@@ -26,12 +27,12 @@ class ServiceJob
     private $result;
     /**
      * @var ServiceConnection
-     * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs")
+     * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs",cascade={"all"})
      */
     private $connection;
     /**
      * @var ServiceCommand
-     * @ManyToOne(targetEntity="App\Entity\ServiceConnection")
+     * @OneToOne(targetEntity="App\Entity\ServiceCommand")
      */
     private $command;
 
@@ -54,6 +55,22 @@ class ServiceJob
     public function setResult(string $result): void
     {
         $this->result = $result;
+    }
+
+    /**
+     * @return ServiceConnection
+     */
+    public function getConnection(): ServiceConnection
+    {
+        return $this->connection;
+    }
+
+    /**
+     * @param ServiceConnection $connection
+     */
+    public function setConnection(ServiceConnection $connection): void
+    {
+        $this->connection = $connection;
     }
 
     /**

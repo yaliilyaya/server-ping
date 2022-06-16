@@ -30,10 +30,12 @@ class ServiceConnection
      */
     private $ip;
     /**
-     * @var Collection
-     * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
+     * @var Collection|ServiceJob[]
+     * @see ServiceJob::connection
+     * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY",cascade={"all"})
      */
     private $jobs;
+
 
     public function __construct()
     {

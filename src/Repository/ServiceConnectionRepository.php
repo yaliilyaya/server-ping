@@ -54,11 +54,11 @@ class ServiceConnectionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ServiceConnection $serverOption
+     * @param ServiceConnection $serviceConnection
      */
-    public function save(ServiceConnection $serverOption): void
+    public function save(ServiceConnection $serviceConnection): void
     {
-        $this->getEntityManager()->persist($serverOption);
+        $this->getEntityManager()->persist($serviceConnection);
         $this->getEntityManager()->flush();
     }
 
