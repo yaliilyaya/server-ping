@@ -78,11 +78,12 @@ class ServiceJobType extends AbstractType
             ];
         })->toArray();
 
-        dump($commandValues);
-
         return $commandValues ? array_merge(...$commandValues) : [];
     }
 
+    /**
+     * @return array
+     */
     private function findConnectionList()
     {
         $connectionsData = $this->serviceConnectionRepository->findAll();
@@ -94,9 +95,6 @@ class ServiceJobType extends AbstractType
             ];
         })->toArray();
 
-        dump($connectionValues);
-
         return $connectionValues ? array_merge(...$connectionValues) : [];
-
     }
 }
