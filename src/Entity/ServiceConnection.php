@@ -40,6 +40,7 @@ class ServiceConnection
     public function __construct()
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
+        $this->setIsActive(false);
     }
 
     /**
