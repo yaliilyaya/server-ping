@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<title>ServiceCommand</title>
+
+{% block body %}
+    <h1>ServiceCommand</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Type</th>
+                <td>{{ service_command.type }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ service_command.id }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ service_command.data ? service_command.data|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ service_command.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('service-command.index') }}">back to list</a>
+
+    <a href="{{ path('service-command.edit', {'id': service_command.id}) }}">edit</a>
+
+    {{ include('service_command/_delete_form.html.twig') }}
+{% endblock %}

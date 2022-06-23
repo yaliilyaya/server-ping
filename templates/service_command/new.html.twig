@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New ServiceCommand</title>
+
+{% block body %}
+    <h1>Create new ServiceCommand</h1>
+
+    {{ include('service_command/_form.html.twig') }}
+
+    <a href="{{ path('service-command.index') }}">back to list</a>
+{% endblock %}

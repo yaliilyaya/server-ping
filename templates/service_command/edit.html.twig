@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit ServiceCommand</title>
+
+{% block body %}
+    <h1>Edit ServiceCommand</h1>
+
+    {{ include('service_command/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('service-command.index') }}">back to list</a>
+
+    {{ include('service_command/_delete_form.html.twig') }}
+{% endblock %}

@@ -17,6 +17,11 @@ class ServiceCommand
     use DataTrait;
     use ActiveTrait;
 
+    public function __construct()
+    {
+        $this->isActive = false;
+    }
+
     /**
      * @var string
      * @ORM\Column(type="string")
