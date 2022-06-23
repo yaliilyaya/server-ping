@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\ServiceJob;
 use App\Form\ServiceJobType;
+use App\Repository\ServiceCommandRepository;
+use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,13 +31,29 @@ class ServiceJobController extends AbstractController
     /**
      * @Route("/new", name="service-job.new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ServiceCommandRepository $serviceCommandRepository,
+        ServiceConnectionRepository $serviceConnectionRepository
+    ): Response {
         $serviceJob = new ServiceJob();
         $form = $this->createForm(ServiceJobType::class, $serviceJob);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $connectionId = $form->get('connectionId')->getNormData();
+            $commandId = $form->get('commandId')->getNormData();
+
+            $connection = $serviceConnectionRepository->find($connectionId);
+            $command = $serviceCommandRepository->find($commandId);
+
+            $serviceJob->setConnection($connection);
+            $serviceJob->setCommand($command);
+
+            dump($connection, $command);
+
             $entityManager->persist($serviceJob);
             $entityManager->flush();
 

@@ -38,11 +38,11 @@ class ServiceJobType extends AbstractType
     {
         $builder
 //            ->add('result')
-            ->add('connection', ChoiceType::class, [
+            ->add('connectionId', ChoiceType::class, [
                 'choices'  => $this->findConnectionList(),
                 'required' => false
             ])
-            ->add('command', ChoiceType::class, [
+            ->add('commandId', ChoiceType::class, [
                 'choices'  => $this->findCommandList(),
                 'required' => false
             ])

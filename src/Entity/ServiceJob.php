@@ -44,6 +44,8 @@ class ServiceJob implements
     public function __construct()
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
+        $this->setIsActive(false);
+        $this->setResult('');
     }
 
     /**
