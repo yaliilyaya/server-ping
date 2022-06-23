@@ -1,11 +1,19 @@
-<!DOCTYPE html>
+{% extends 'layout.html.twig' %}
 
-<title>New ServiceJob</title>
+{% block title %}Create new ServiceJob {% endblock %}
 
-{% block body %}
-    <h1>Create new ServiceJob</h1>
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
 
-    {{ include('service_job/_form.html.twig') }}
-
-    <a href="{{ path('service-job.index') }}">back to list</a>
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Create new ServiceJob</h3>
+                </div>
+                <div class="card-body">
+                    {{ include('service_job/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
