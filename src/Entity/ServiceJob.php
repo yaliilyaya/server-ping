@@ -13,7 +13,11 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobRepository::class)
  */
-class ServiceJob
+class ServiceJob implements
+    IdentifierInterface,
+    DataInterface,
+    ActiveInterface,
+    StatusInterface
 {
     use IdentifierTrait;
     use DataTrait;
@@ -27,6 +31,7 @@ class ServiceJob
     private $result;
     /**
      * @var ServiceConnection
+     * @see ServiceConnection::jobs
      * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs")
      */
     private $connection;

@@ -6,6 +6,9 @@ namespace App\Entity;
 
 use App\Enum\StatusEnum;
 
+/**
+ * @see StatusInterface
+ */
 trait StatusTrait
 {
     /**
@@ -25,9 +28,11 @@ trait StatusTrait
 
     /**
      * @param string $status
+     * @return StatusInterface
      */
-    public function setStatus(string $status): void
+    public function setStatus(string $status): StatusInterface
     {
         $this->status = $status;
+        return $this;
     }
 }

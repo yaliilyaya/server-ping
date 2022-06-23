@@ -12,7 +12,11 @@ use Doctrine\ORM\Mapping\OneToMany;
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceConnectionRepository::class)
  */
-class ServiceConnection
+class ServiceConnection implements
+    IdentifierInterface,
+    DataInterface,
+    ActiveInterface,
+    StatusInterface
 {
     use IdentifierTrait;
     use DataTrait;
@@ -32,7 +36,7 @@ class ServiceConnection
     /**
      * @var Collection|ServiceJob[]
      * @see ServiceJob::connection
-     * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
+     * @OneToMany(targetEntity="\App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
      */
     private $jobs;
 

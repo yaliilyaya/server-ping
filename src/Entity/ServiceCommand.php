@@ -11,7 +11,10 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceCommandRepository::class)
  */
-class ServiceCommand
+class ServiceCommand implements
+    IdentifierInterface,
+    DataInterface,
+    ActiveInterface
 {
     use IdentifierTrait;
     use DataTrait;
