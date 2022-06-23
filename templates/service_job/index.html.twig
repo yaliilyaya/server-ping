@@ -17,22 +17,23 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Result</th>
-                            <th>Id</th>
+                            <th width="20">Id</th>
+                            <th width="40">Status</th>
+                            <th width="300">Result</th>
                             <th>Data</th>
-                            <th>IsActive</th>
-                            <th>Status</th>
-                            <th>actions</th>
+                            <th width="20">IsActive</th>
+                            <th width="80">actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for service_job in service_jobs %}
                             <tr>
-                                <td>{{ service_job.result }}</td>
                                 <td>{{ service_job.id }}</td>
+                                <td>{{ service_job.status }}</td>
+                                <td>{{ service_job.result }}</td>
                                 <td>{{ service_job.data ? service_job.data|json_encode : '' }}</td>
                                 <td>{{ service_job.isActive ? 'Yes' : 'No' }}</td>
-                                <td>{{ service_job.status }}</td>
+
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ path('service-job.show', {'id': service_job.id}) }}"
