@@ -1,13 +1,20 @@
-<!DOCTYPE html>
+{% extends 'layout.html.twig' %}
 
-<title>Edit ServiceConnection</title>
+{% block title %}Edit ServiceConnection #{{ service_connection.id }} {% endblock %}
 
-{% block body %}
-    <h1>Edit ServiceConnection</h1>
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
 
-    {{ include('service_connection/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('service-connection.index') }}">back to list</a>
-
-    {{ include('service_connection/_delete_form.html.twig') }}
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Edit ServiceConnection #{{ service_connection.id }}</h3>
+                </div>
+                <div class="card-body">
+                    {{ include('service_connection/_form.html.twig', {'button_label': 'Update'}) }}
+                    {{ include('service_connection/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
