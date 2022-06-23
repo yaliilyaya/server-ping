@@ -1,11 +1,19 @@
-<!DOCTYPE html>
+{% extends 'layout.html.twig' %}
 
-<title>New ServiceCommand</title>
+{% block title %}Create new ServiceCommand {% endblock %}
 
-{% block body %}
-    <h1>Create new ServiceCommand</h1>
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
 
-    {{ include('service_command/_form.html.twig') }}
-
-    <a href="{{ path('service-command.index') }}">back to list</a>
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Подробная информация</h3>
+                </div>
+                <div class="card-body">
+                    {{ include('service_command/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
