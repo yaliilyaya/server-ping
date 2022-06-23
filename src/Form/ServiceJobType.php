@@ -72,8 +72,9 @@ class ServiceJobType extends AbstractType
         $commandsData = $this->serviceCommandRepository->findAll();
         $commands = new ArrayCollection($commandsData);
         $commandValues = $commands->map(function (ServiceCommand $command) {
+            $label = sprintf('%s #%s', $command->getType(), $command->getId());
             return [
-                $command->getType() => $command->getId()
+                $label => $command->getId()
             ];
         })->toArray();
 
@@ -87,8 +88,9 @@ class ServiceJobType extends AbstractType
         $connectionsData = $this->serviceConnectionRepository->findAll();
         $connections = new ArrayCollection($connectionsData);
         $connectionValues = $connections->map(function (ServiceConnection $connection) {
+            $label = sprintf('%s #%s', $connection->getName(), $connection->getId());
             return [
-                $connection->getName() => $connection->getId()
+                $label => $connection->getId()
             ];
         })->toArray();
 

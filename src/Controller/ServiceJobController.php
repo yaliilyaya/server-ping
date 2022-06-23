@@ -52,8 +52,6 @@ class ServiceJobController extends AbstractController
             $serviceJob->setConnection($connection);
             $serviceJob->setCommand($command);
 
-            dump($connection, $command);
-
             $entityManager->persist($serviceJob);
             $entityManager->flush();
 
@@ -79,16 +77,36 @@ class ServiceJobController extends AbstractController
     /**
      * @Route("/{id}/edit", name="service-job.edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, ServiceJob $serviceJob, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(
+        Request $request,
+        ServiceJob $serviceJob,
+        EntityManagerInterface $entityManager,
+        ServiceCommandRepository $serviceCommandRepository,
+        ServiceConnectionRepository $serviceConnectionRepository
+    ): Response {
         $form = $this->createForm(ServiceJobType::class, $serviceJob);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $connectionId = $form->get('connectionId')->getNormData();
+            $commandId = $form->get('commandId')->getNormData();
+
+            $connection = $serviceConnectionRepository->find($connectionId);
+            $command = $serviceCommandRepository->find($commandId);
+
+            $serviceJob->setConnection($connection);
+            $serviceJob->setCommand($command);
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_service_job_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
         }
+
+        $form->get('connectionId')
+            ->setData($serviceJob->getConnection()->getId());
+        $form->get('commandId')
+            ->setData($serviceJob->getCommand()->getId());
 
         return $this->render('service_job/edit.html.twig', [
             'service_job' => $serviceJob,
@@ -106,6 +124,6 @@ class ServiceJobController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_service_job_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
     }
 }
