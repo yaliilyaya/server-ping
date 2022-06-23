@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
- * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
+ * @ORM\Entity(repositoryClass=\App\Repository\ServiceConnectionRepository::class)
  */
 class ServiceConnection
 {

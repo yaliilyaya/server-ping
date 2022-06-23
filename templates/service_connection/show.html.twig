@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<title>ServiceConnection</title>
+
+{% block body %}
+    <h1>ServiceConnection</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ service_connection.name }}</td>
+            </tr>
+            <tr>
+                <th>Ip</th>
+                <td>{{ service_connection.ip }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ service_connection.id }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ service_connection.data ? service_connection.data|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ service_connection.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ service_connection.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('service-connection.index') }}">back to list</a>
+
+    <a href="{{ path('service-connection.edit', {'id': service_connection.id}) }}">edit</a>
+
+    {{ include('service_connection/_delete_form.html.twig') }}
+{% endblock %}

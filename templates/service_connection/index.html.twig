@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<title>ServiceConnection index</title>
+
+{% block body %}
+    <h1>ServiceConnection index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Ip</th>
+                <th>Id</th>
+                <th>Data</th>
+                <th>IsActive</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service_connection in service_connections %}
+            <tr>
+                <td>{{ service_connection.name }}</td>
+                <td>{{ service_connection.ip }}</td>
+                <td>{{ service_connection.id }}</td>
+                <td>{{ service_connection.data ? service_connection.data|json_encode : '' }}</td>
+                <td>{{ service_connection.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ service_connection.status }}</td>
+                <td>
+                    <a href="{{ path('service-connection.show', {'id': service_connection.id}) }}">show</a>
+                    <a href="{{ path('service-connection.edit', {'id': service_connection.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('service-connection.new') }}">Create new</a>
+{% endblock %}
