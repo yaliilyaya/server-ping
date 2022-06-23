@@ -19,6 +19,8 @@
                         <tr>
                             <th width="20">Id</th>
                             <th width="40">Status</th>
+                            <th width="40">Service connection</th>
+                            <th width="40">Service command</th>
                             <th width="300">Result</th>
                             <th>Data</th>
                             <th width="20">IsActive</th>
@@ -30,6 +32,9 @@
                             <tr>
                                 <td>{{ service_job.id }}</td>
                                 <td>{{ service_job.status }}</td>
+                                <td>{{ service_job.connection.name }}</td>
+                                <td>{{ service_job.command.type }}</td>
+
                                 <td>{{ service_job.result }}</td>
                                 <td>{{ service_job.data ? service_job.data|json_encode : '' }}</td>
                                 <td>{{ service_job.isActive ? 'Yes' : 'No' }}</td>
