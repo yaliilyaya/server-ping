@@ -17,24 +17,27 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th width="100">Name</th>
-                            <th width="80">Ip</th>
                             <th width="20">Id</th>
+                            <th width="40">Status</th>
+                            <th width="300">Name</th>
+                            <th width="80">Ip</th>
+
                             <th>Data</th>
-                            <th>IsActive</th>
-                            <th>Status</th>
+                            <th width="20">IsActive</th>
+
                             <th width="80">actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for service_connection in service_connections %}
                             <tr>
+                                <td>{{ service_connection.id }}</td>
+                                <td>{{ service_connection.status }}</td>
                                 <td>{{ service_connection.name }}</td>
                                 <td>{{ service_connection.ip }}</td>
-                                <td>{{ service_connection.id }}</td>
                                 <td>{{ service_connection.data ? service_connection.data|json_encode : '' }}</td>
                                 <td>{{ service_connection.isActive ? 'Yes' : 'No' }}</td>
-                                <td>{{ service_connection.status }}</td>
+
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ path('service-connection.show', {'id': service_connection.id}) }}"
