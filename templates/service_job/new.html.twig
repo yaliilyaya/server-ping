@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New ServiceJob</title>
+
+{% block body %}
+    <h1>Create new ServiceJob</h1>
+
+    {{ include('service_job/_form.html.twig') }}
+
+    <a href="{{ path('service-job.index') }}">back to list</a>
+{% endblock %}

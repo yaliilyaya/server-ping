@@ -32,7 +32,7 @@ class ServiceConnection
     /**
      * @var Collection|ServiceJob[]
      * @see ServiceJob::connection
-     * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY",cascade={"all"})
+     * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
      */
     private $jobs;
 

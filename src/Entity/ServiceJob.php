@@ -27,7 +27,7 @@ class ServiceJob
     private $result;
     /**
      * @var ServiceConnection
-     * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs",cascade={"all"})
+     * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs")
      */
     private $connection;
     /**

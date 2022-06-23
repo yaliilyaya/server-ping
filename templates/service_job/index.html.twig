@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<title>ServiceJob index</title>
+
+{% block body %}
+    <h1>ServiceJob index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Result</th>
+                <th>Id</th>
+                <th>Data</th>
+                <th>IsActive</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service_job in service_jobs %}
+            <tr>
+                <td>{{ service_job.result }}</td>
+                <td>{{ service_job.id }}</td>
+                <td>{{ service_job.data ? service_job.data|json_encode : '' }}</td>
+                <td>{{ service_job.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ service_job.status }}</td>
+                <td>
+                    <a href="{{ path('service-job.show', {'id': service_job.id}) }}">show</a>
+                    <a href="{{ path('service-job.edit', {'id': service_job.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('service-job.new') }}">Create new</a>
+{% endblock %}
