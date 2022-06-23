@@ -20,7 +20,6 @@ class ServiceConnectionType extends AbstractType
             ->add('isActive', CheckboxType::class, [
                 'required' => false
             ])
-            ->add('status')
         ;
     }
 

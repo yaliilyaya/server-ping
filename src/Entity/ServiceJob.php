@@ -30,13 +30,13 @@ class ServiceJob implements
      */
     private $result;
     /**
-     * @var ServiceConnection
+     * @var ServiceConnection|null
      * @see ServiceConnection::jobs
      * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs")
      */
     private $connection;
     /**
-     * @var ServiceCommand
+     * @var ServiceCommand|null
      * @OneToOne(targetEntity="App\Entity\ServiceCommand")
      */
     private $command;
@@ -63,33 +63,33 @@ class ServiceJob implements
     }
 
     /**
-     * @return ServiceConnection
+     * @return ServiceConnection|null
      */
-    public function getConnection(): ServiceConnection
+    public function getConnection(): ?ServiceConnection
     {
         return $this->connection;
     }
 
     /**
-     * @param ServiceConnection $connection
+     * @param ServiceConnection|null $connection
      */
-    public function setConnection(ServiceConnection $connection): void
+    public function setConnection(?ServiceConnection $connection): void
     {
         $this->connection = $connection;
     }
 
     /**
-     * @return ServiceCommand
+     * @return ServiceCommand|null
      */
-    public function getCommand(): ServiceCommand
+    public function getCommand(): ?ServiceCommand
     {
         return $this->command;
     }
 
     /**
-     * @param ServiceCommand $command
+     * @param ServiceCommand|null $command
      */
-    public function setCommand(ServiceCommand $command): void
+    public function setCommand(?ServiceCommand $command): void
     {
         $this->command = $command;
     }
