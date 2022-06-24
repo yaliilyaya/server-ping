@@ -7,8 +7,10 @@ use App\Form\ServiceJobType;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -109,6 +111,51 @@ class ServiceJobController extends AbstractController
             ->setData($serviceJob->getCommand()->getId());
 
         return $this->render('service_job/edit.html.twig', [
+            'service_job' => $serviceJob,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/connect/{connectionId}/{commandType}", name="service-job.connect", methods={"GET", "POST"})
+     */
+    public function connect(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ServiceCommandRepository $serviceCommandRepository,
+        ServiceConnectionRepository $serviceConnectionRepository,
+        $connectionId,
+        $commandType
+    ): Response {
+        $serviceJob = new ServiceJob();
+
+        $form = $this->createForm(ServiceJobType::class, $serviceJob);
+        $form->handleRequest($request);
+
+        $connection = $serviceConnectionRepository->find($connectionId);
+        $command = $serviceCommandRepository->findByType($commandType);
+        $serviceJob->setConnection($connection);
+        $serviceJob->setCommand($command);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $entityManager->persist($serviceJob);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
+            } catch (UniqueConstraintViolationException $exception) {
+                $form->get('commandId')
+                    ->addError(new FormError($exception->getMessage()));
+            }
+        }
+        else {
+            $form->get('connectionId')
+                ->setData($connection->getId());
+            $form->get('commandId')
+                ->setData($command->getId());
+        }
+
+        return $this->render('service_job/new.html.twig', [
             'service_job' => $serviceJob,
             'form' => $form->createView(),
         ]);

@@ -58,4 +58,15 @@ class ServiceCommandRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($serverOption);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * @param $commandType
+     * @return ServiceCommand|null
+     */
+    public function findByType($commandType): ?ServiceCommand
+    {
+        return $this->findOneBy([
+            'type' => $commandType
+        ]);
+    }
 }
