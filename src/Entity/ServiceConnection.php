@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
+ * @property string $user
+ * @property string $password
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceConnectionRepository::class)
  */
 class ServiceConnection implements
@@ -92,6 +94,38 @@ class ServiceConnection implements
     public function setJobs(Collection $jobs): void
     {
         $this->jobs = $jobs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUser(): string
+    {
+        return $this->user ?? '';
+    }
+
+    /**
+     * @param string $user
+     */
+    public function setUser(string $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password ?? '';
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     /**
