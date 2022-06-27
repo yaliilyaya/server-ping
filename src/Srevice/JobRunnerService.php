@@ -3,16 +3,16 @@
 namespace App\Srevice;
 
 use App\Entity\ServiceJob;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use App\Factory\CommandRunnerFactory;
 
 class JobRunnerService
 {
     /**
-     * @var \App\Factory\CommandRunnerFactory
+     * @var CommandRunnerFactory
      */
     private $commandRunnerFactory;
 
-    public function __construct(\App\Factory\CommandRunnerFactory $commandRunnerFactory)
+    public function __construct(CommandRunnerFactory $commandRunnerFactory)
     {
 
         $this->commandRunnerFactory = $commandRunnerFactory;

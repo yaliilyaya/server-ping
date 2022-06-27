@@ -9,6 +9,5 @@ class EmptyCommand implements CommandInterface
 {
     public function run(ServiceJob $serviceJob)
     {
-        die(__FILE__ . __LINE__);
     }
 }
