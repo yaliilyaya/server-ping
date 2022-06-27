@@ -54,7 +54,7 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("/config/{serviceId}", name="config")
+     * @ Route("/config/{serviceId}", name="config") TODO:: доработать, слишком сложная логика работы
      * @param ServiceConnectionRepository $serviceConnectionRepository
      * @param ExtractorConfigServer $extractorConfigServer
      * @param SaveConfigServer $saveConfigServer

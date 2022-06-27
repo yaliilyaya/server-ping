@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ServiceCommand;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\Collection;
 
@@ -68,5 +69,32 @@ class ServiceCommandRepository extends ServiceEntityRepository
         return $this->findOneBy([
             'type' => $commandType
         ]);
+    }
+
+    /**
+     * @param array $commandIds
+     * @return ArrayCollection|ServiceCommand[]
+     */
+    public function findByIds(array $commandIds)
+    {
+        $commands = $this->findBy([
+            'id' => $commandIds
+        ]);
+
+        return new ArrayCollection($commands);
+    }
+
+    /**
+     * @param array $commandIds
+     * @return ArrayCollection|ServiceCommand[]
+     */
+    public function findAllIgnoreIds(array $commandIds)
+    {
+        $commandsData = $this->findAll();
+        $commands = new ArrayCollection($commandsData);
+
+        return $commands->filter(function (ServiceCommand $command) use ($commandIds) {
+            return !in_array($command->getId(), $commandIds);
+        });
     }
 }
