@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceCommandRepository::class)
@@ -19,6 +20,13 @@ class ServiceCommand implements
     use IdentifierTrait;
     use DataTrait;
     use ActiveTrait;
+
+    /**
+     * @var Collection|ServiceJob[]
+     * @see ServiceJob::command
+     * @OneToMany(targetEntity="\App\Entity\ServiceJob", mappedBy="conmmand", fetch="EXTRA_LAZY")
+     */
+    private $jobs;
 
     public function __construct()
     {
@@ -46,6 +54,22 @@ class ServiceCommand implements
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return ServiceJob[]|Collection
+     */
+    public function getJobs()
+    {
+        return $this->jobs;
+    }
+
+    /**
+     * @param ServiceJob[]|Collection $jobs
+     */
+    public function setJobs($jobs): void
+    {
+        $this->jobs = $jobs;
     }
 
     /**

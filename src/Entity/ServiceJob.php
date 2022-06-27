@@ -37,7 +37,8 @@ class ServiceJob implements
     private $connection;
     /**
      * @var ServiceCommand|null
-     * @OneToOne(targetEntity="App\Entity\ServiceCommand")
+     * @see ServiceCommand::jobs
+     * @ManyToOne(targetEntity="App\Entity\ServiceCommand", inversedBy="jobs")
      */
     private $command;
 

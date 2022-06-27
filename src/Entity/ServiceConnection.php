@@ -40,7 +40,6 @@ class ServiceConnection implements
      */
     private $jobs;
 
-
     public function __construct()
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
