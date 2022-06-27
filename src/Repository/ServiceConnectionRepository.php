@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ServiceConnection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\Collection;
 
@@ -66,5 +67,14 @@ class ServiceConnectionRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->remove($serverOption);
         $this->getEntityManager()->flush();
+    }
+
+    public function findActiveAll()
+    {
+        $list = $this->findBy([
+            'isActive' => true
+        ]);
+
+        return new ArrayCollection($list);
     }
 }

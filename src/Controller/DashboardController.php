@@ -20,7 +20,7 @@ class DashboardController extends AbstractController
      */
     public function index(ServiceConnectionRepository $serviceConnectionRepository): Response
     {
-        $services = $serviceConnectionRepository->findAll();
+        $services = $serviceConnectionRepository->findActiveAll();
 
         return $this->render('index/dashboard.html.twig', [
             'services' => $services
