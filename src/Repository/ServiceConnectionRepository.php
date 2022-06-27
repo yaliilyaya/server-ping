@@ -69,7 +69,10 @@ class ServiceConnectionRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function findActiveAll()
+    /**
+     * @return ArrayCollection
+     */
+    public function findActiveAll(): ArrayCollection
     {
         $list = $this->findBy([
             'isActive' => true
