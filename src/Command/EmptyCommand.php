@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Entity\ServiceCommand;
 use App\Entity\ServiceJob;
 
-class PingCommand implements CommandInterface
+class EmptyCommand implements CommandInterface
 {
     public function run(ServiceJob $serviceJob)
     {

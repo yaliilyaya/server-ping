@@ -7,6 +7,7 @@ use App\Form\ServiceJobType;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobRepository;
+use App\Srevice\JobRunnerService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,11 +35,12 @@ class ServiceJobController extends AbstractController
      * @Route("/new", name="service-job.new", methods={"GET", "POST"})
      */
     public function new(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        ServiceCommandRepository $serviceCommandRepository,
+        Request                     $request,
+        EntityManagerInterface      $entityManager,
+        ServiceCommandRepository    $serviceCommandRepository,
         ServiceConnectionRepository $serviceConnectionRepository
-    ): Response {
+    ): Response
+    {
         $serviceJob = new ServiceJob();
         $form = $this->createForm(ServiceJobType::class, $serviceJob);
         $form->handleRequest($request);
@@ -80,12 +82,13 @@ class ServiceJobController extends AbstractController
      * @Route("/{id}/edit", name="service-job.edit", methods={"GET", "POST"})
      */
     public function edit(
-        Request $request,
-        ServiceJob $serviceJob,
-        EntityManagerInterface $entityManager,
-        ServiceCommandRepository $serviceCommandRepository,
+        Request                     $request,
+        ServiceJob                  $serviceJob,
+        EntityManagerInterface      $entityManager,
+        ServiceCommandRepository    $serviceCommandRepository,
         ServiceConnectionRepository $serviceConnectionRepository
-    ): Response {
+    ): Response
+    {
         $form = $this->createForm(ServiceJobType::class, $serviceJob);
         $form->handleRequest($request);
 
@@ -120,13 +123,14 @@ class ServiceJobController extends AbstractController
      * @Route("/connect/{connectionId}/{commandType}", name="service-job.connect", methods={"GET", "POST"})
      */
     public function connect(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        ServiceCommandRepository $serviceCommandRepository,
+        Request                     $request,
+        EntityManagerInterface      $entityManager,
+        ServiceCommandRepository    $serviceCommandRepository,
         ServiceConnectionRepository $serviceConnectionRepository,
-        $connectionId,
-        $commandType
-    ): Response {
+                                    $connectionId,
+                                    $commandType
+    ): Response
+    {
         $serviceJob = new ServiceJob();
 
         $form = $this->createForm(ServiceJobType::class, $serviceJob);
@@ -147,8 +151,7 @@ class ServiceJobController extends AbstractController
                 $form->get('commandId')
                     ->addError(new FormError($exception->getMessage()));
             }
-        }
-        else {
+        } else {
             $form->get('connectionId')
                 ->setData($connection->getId());
             $form->get('commandId')
@@ -166,10 +169,27 @@ class ServiceJobController extends AbstractController
      */
     public function delete(Request $request, ServiceJob $serviceJob, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$serviceJob->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $serviceJob->getId(), $request->request->get('_token'))) {
             $entityManager->remove($serviceJob);
             $entityManager->flush();
         }
+
+        return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/run/{id}", name="service-job.run", methods={"GET"})
+     */
+    public function run(
+        Request    $request,
+        ServiceJob $serviceJob,
+        JobRunnerService $jobRunnerService
+    ): Response {
+
+        $jobRunnerService->run($serviceJob);
+
+
+        die(__FILE__ . __LINE__);
 
         return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
     }
