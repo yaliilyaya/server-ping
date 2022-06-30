@@ -68,28 +68,4 @@ class DashboardController extends AbstractController
         })->toArray();
     }
 
-    /**
-     * @Route("/job/reports/{commandType}", name="job.reports")
-     * @param string $commandType
-     * @param ServiceJobRepository $serviceJobRepository
-     * @param ServiceCommandRepository $serviceCommandRepository
-     * @return Response
-     */
-    public function jobReport(
-        string $commandType,
-        ServiceJobRepository $serviceJobRepository,
-        ServiceCommandRepository $serviceCommandRepository
-    ): Response {
-
-        $command = $serviceCommandRepository->findByType($commandType);
-        $jobs = $serviceJobRepository->findAllByCommand($command);
-
-        dump($jobs);
-        dump($command->getJobs());
-
-        return $this->render('index/jobs.report.html.twig', [
-            'jobs' => $jobs,
-            'commandType' => $commandType
-        ]);
-    }
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ServiceCommand;
 use App\Form\ServiceCommandType;
 use App\Repository\ServiceCommandRepository;
+use App\Repository\ServiceJobRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,5 +92,27 @@ class ServiceCommandController extends AbstractController
         }
 
         return $this->redirectToRoute('service-command.index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/job-reports/{type}", name="service-command.job.reports")
+     * @param string $type
+     * @param ServiceJobRepository $serviceJobRepository
+     * @param ServiceCommandRepository $serviceCommandRepository
+     * @return Response
+     */
+    public function jobReport(
+        string                   $type,
+        ServiceJobRepository     $serviceJobRepository,
+        ServiceCommandRepository $serviceCommandRepository
+    ): Response {
+
+        $command = $serviceCommandRepository->findByType($type);
+        $jobs = $serviceJobRepository->findAllByCommand($command);
+
+        return $this->render('service_command/jobs.report.html.twig', [
+            'jobs' => $jobs,
+            'commandType' => $type
+        ]);
     }
 }

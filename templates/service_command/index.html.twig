@@ -34,6 +34,8 @@
 
                                 <td>
                                     <div class="btn-group">
+                                        <a href="{{ path('service-command.job.reports', {'type': service_command.type}) }}"
+                                           class="btn btn-info btn-sm">report</a>
                                         <a href="{{ path('service-command.show', {'id': service_command.id}) }}"
                                            class="btn btn-info btn-sm">show</a>
                                         <a href="{{ path('service-command.edit', {'id': service_command.id}) }}"
