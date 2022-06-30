@@ -3,6 +3,7 @@
 namespace App\Srevice;
 
 use App\Entity\ServiceJob;
+use App\Entity\ServiceJobReport;
 use App\Factory\CommandRunnerFactory;
 
 class JobRunnerService
@@ -14,15 +15,18 @@ class JobRunnerService
 
     public function __construct(CommandRunnerFactory $commandRunnerFactory)
     {
-
         $this->commandRunnerFactory = $commandRunnerFactory;
     }
 
-    public function run(ServiceJob $serviceJob)
+    /**
+     * @param ServiceJob $serviceJob
+     * @return ServiceJobReport
+     */
+    public function run(ServiceJob $serviceJob): ServiceJobReport
     {
         $command = $serviceJob->getCommand();
 
         $runner = $this->commandRunnerFactory->create($command->getType());
-        $runner->run($serviceJob);
+        return $runner->run($serviceJob);
     }
 }

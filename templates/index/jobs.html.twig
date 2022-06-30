@@ -40,6 +40,12 @@
                                 <td>{{ job.data | json_encode }}</td>
                                 <td>
                                     <div class="btn-group">
+                                        <a href="{{ path('service-job.report', {id: job.id}) }}"  class="btn btn-info btn-sm">
+                                            Report
+                                        </a>
+                                        <a href="{{ path('service-job.run', {id: job.id}) }}"  class="btn btn-info btn-sm">
+                                            Run
+                                        </a>
                                         <a href="{{ path('service-job.edit', {id: job.id}) }}"  class="btn btn-info btn-sm">
                                             {#<span class="fas fa-upload"></span> #}
                                             Edit

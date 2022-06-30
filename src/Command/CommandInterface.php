@@ -3,12 +3,13 @@
 namespace App\Command;
 
 use App\Entity\ServiceJob;
+use App\Entity\ServiceJobReport;
 
 interface CommandInterface
 {
     /**
      * @param ServiceJob $serviceJob
-     * @return mixed
+     * @return ServiceJobReport
      */
-    public function run(ServiceJob $serviceJob);
+    public function run(ServiceJob $serviceJob): ServiceJobReport;
 }

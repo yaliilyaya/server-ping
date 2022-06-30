@@ -5,6 +5,7 @@ use App\Entity\ServiceConnection;
 use App\Entity\ServiceJob;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
+use App\Repository\ServiceJobRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,5 +66,30 @@ class DashboardController extends AbstractController
         return $jobs->map(function (ServiceJob $job) {
             return $job->getCommand()->getId();
         })->toArray();
+    }
+
+    /**
+     * @Route("/job/reports/{commandType}", name="job.reports")
+     * @param string $commandType
+     * @param ServiceJobRepository $serviceJobRepository
+     * @param ServiceCommandRepository $serviceCommandRepository
+     * @return Response
+     */
+    public function jobReport(
+        string $commandType,
+        ServiceJobRepository $serviceJobRepository,
+        ServiceCommandRepository $serviceCommandRepository
+    ): Response {
+
+        $command = $serviceCommandRepository->findByType($commandType);
+        $jobs = $serviceJobRepository->findAllByCommand($command);
+
+        dump($jobs);
+        dump($command->getJobs());
+
+        return $this->render('index/jobs.report.html.twig', [
+            'jobs' => $jobs,
+            'commandType' => $commandType
+        ]);
     }
 }

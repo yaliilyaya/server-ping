@@ -183,14 +183,33 @@ class ServiceJobController extends AbstractController
     public function run(
         Request    $request,
         ServiceJob $serviceJob,
-        JobRunnerService $jobRunnerService
+        JobRunnerService $jobRunnerService,
+        ServiceJobRepository $serviceJobRepository
     ): Response {
 
-        $jobRunnerService->run($serviceJob);
+        $report = $jobRunnerService->run($serviceJob);
+        $serviceJob->setResult($report->getResult());
 
+        $serviceJobRepository->save($serviceJob);
+
+        echo "<pre>" .
+            $serviceJob->getResult()
+            . "</pre>";
 
         die(__FILE__ . __LINE__);
 
         return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/report/{id}", name="service-job.report", methods={"GET"})
+     */
+    public function report(
+        Request    $request,
+        ServiceJob $serviceJob
+    ): Response {
+
+        echo "<pre>" . $serviceJob->getResult() . "</pre>";
+        die();
     }
 }
