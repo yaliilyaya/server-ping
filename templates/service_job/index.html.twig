@@ -32,7 +32,7 @@
                             <tr>
                                 <td>{{ service_job.id }}</td>
                                 <td>{{ service_job.status }}</td>
-                                <td>{{ service_job.connection.name }}</td>
+                                <td>{{ service_job.connection.name }} {{ service_job.connection.ip }} </td>
                                 <td>{{ service_job.command.type }}</td>
 
                                 <td>{{ service_job.result }}</td>
@@ -41,8 +41,12 @@
 
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ path('service-job.show', {'id': service_job.id}) }}"
-                                           class="btn btn-info btn-sm">show</a>
+                                        {% if service_job.active %}
+                                        <a href="{{ path('service-job.report', {'id': service_job.id}) }}"
+                                           class="btn btn-info btn-sm">report</a>
+                                        <a href="{{ path('service-job.run', {'id': service_job.id}) }}"
+                                           class="btn btn-info btn-sm">run</a>
+                                        {% endif %}
                                         <a href="{{ path('service-job.edit', {'id': service_job.id}) }}"
                                            class="btn btn-info btn-sm">edit</a>
                                     </div>
