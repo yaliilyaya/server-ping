@@ -74,4 +74,16 @@ class ServiceJobRepository extends ServiceEntityRepository
 
         return new ArrayCollection($list);
     }
+
+    /**
+     * @param Collection $jobs
+     * @return void
+     */
+    public function removeAll(Collection $jobs)
+    {
+        foreach ($jobs as $job) {
+            $this->getEntityManager()->remove($job);
+        }
+        $this->getEntityManager()->flush();
+    }
 }

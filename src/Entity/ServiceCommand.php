@@ -30,7 +30,7 @@ class ServiceCommand implements
 
     public function __construct()
     {
-        $this->isActive = false;
+        $this->setIsActive(false);
     }
 
     /**

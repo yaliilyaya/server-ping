@@ -46,6 +46,8 @@ class ServiceConnection implements
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
         $this->setIsActive(false);
+        $this->setUser('developer');
+        $this->setPassword('developer');
     }
 
     /**

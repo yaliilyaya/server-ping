@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ServiceConnection;
 use App\Form\ServiceConnectionType;
 use App\Repository\ServiceConnectionRepository;
+use App\Repository\ServiceJobRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,9 +82,14 @@ class ServiceConnectionController extends AbstractController
     /**
      * @Route("/{id}", name="service-connection.delete", methods={"POST"})
      */
-    public function delete(Request $request, ServiceConnection $serviceConnection, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$serviceConnection->getId(), $request->request->get('_token'))) {
+    public function delete(
+        Request $request,
+        ServiceConnection $serviceConnection,
+        EntityManagerInterface $entityManager,
+        ServiceJobRepository $serviceJobRepository
+    ): Response {
+        if ($this->isCsrfTokenValid('delete' . $serviceConnection->getId(), $request->request->get('_token'))) {
+            $serviceJobRepository->removeAll($serviceConnection->getJobs());
             $entityManager->remove($serviceConnection);
             $entityManager->flush();
         }

@@ -1,11 +1,13 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\ServiceCommand;
 use App\Entity\ServiceConnection;
 use App\Entity\ServiceJob;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +51,8 @@ class DashboardController extends AbstractController
         $commandIds = $this->findCommandIds($serviceConnection->getJobs());
 
         $commands = $serviceCommandRepository->findAllIgnoreIds($commandIds);
+        $commands = $this->filterNotActive($commands);
+
 
         return $this->render('index/jobs.html.twig', [
             'service' => $serviceConnection,
@@ -66,6 +70,17 @@ class DashboardController extends AbstractController
         return $jobs->map(function (ServiceJob $job) {
             return $job->getCommand()->getId();
         })->toArray();
+    }
+
+    /**
+     * @param ArrayCollection $commands
+     * @return ArrayCollection
+     */
+    private function filterNotActive(ArrayCollection $commands): ArrayCollection
+    {
+        return $commands->filter(function (ServiceCommand $command) {
+            return $command->isActive();
+        });
     }
 
 }

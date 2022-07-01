@@ -86,9 +86,9 @@ class ServiceCommandRepository extends ServiceEntityRepository
 
     /**
      * @param array $commandIds
-     * @return ArrayCollection|ServiceCommand[]
+     * @return ArrayCollection
      */
-    public function findAllIgnoreIds(array $commandIds)
+    public function findAllIgnoreIds(array $commandIds): ArrayCollection
     {
         $commandsData = $this->findAll();
         $commands = new ArrayCollection($commandsData);
