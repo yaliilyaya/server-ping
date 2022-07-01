@@ -10,6 +10,10 @@
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">#{{ job.id }} {{ job.connection.name }} - {{ job.connection.ip }}</h3>
+                        <div class="card-tools">
+                            <a href="{{ path('service-job.run', {'id': job.id}) }}"
+                               class="btn btn-info btn-sm">Run</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <pre>{{ job.result }}</pre>
