@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ServiceCommand;
 use App\Entity\ServiceJob;
+use App\Enum\StatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
@@ -85,5 +86,16 @@ class ServiceJobRepository extends ServiceEntityRepository
             $this->getEntityManager()->remove($job);
         }
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @return ServiceJob|null
+     */
+    public function findFirstActive(): ?ServiceJob
+    {
+        return $this->findOneBy([
+            'isActive' => true,
+            'status' => StatusEnum::DEFAULT_TYPE
+        ]);
     }
 }

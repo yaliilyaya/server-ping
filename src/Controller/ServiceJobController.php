@@ -180,6 +180,38 @@ class ServiceJobController extends AbstractController
     }
 
     /**
+     * @Route("/run/first/", name="service-job.run.first", methods={"GET"})
+     */
+    public function runFirst(
+        JobRunnerService $jobRunnerService,
+        ServiceJobRepository $serviceJobRepository
+    ): Response {
+
+        $serviceJob = $serviceJobRepository->findFirstActive();
+        if (!$serviceJob) {
+            return $this->json([
+                'status' => StatusEnum::SUCCESS_TYPE
+            ]);
+        }
+
+        $report = $jobRunnerService->run($serviceJob);
+
+        $serviceJob->setResult($report->getResult());
+
+        $status = $this->extractStatus($report);
+        $serviceJob->setStatus($status);
+
+        $serviceJobRepository->save($serviceJob);
+
+        return $this->json([
+            'jobId' => $serviceJob->getId(),
+            'commandType' => $serviceJob->getCommand()->getType(),
+            'connectionIp' => $serviceJob->getConnection()->getIp(),
+            'status' => $serviceJob->getStatus()
+        ]);
+    }
+
+    /**
      * @Route("/run/{id}", name="service-job.run", methods={"GET"})
      */
     public function run(
@@ -208,6 +240,8 @@ class ServiceJobController extends AbstractController
             'status' => $serviceJob->getStatus()
         ]);
     }
+
+
 
     /**
      * @Route("/readyToRun/{id}", name="service-job.ready-to-run", methods={"GET"})
