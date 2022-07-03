@@ -2,6 +2,10 @@
 // src/Command/CreateUserCommand.php
 namespace App\Command;
 
+use App\Entity\ServiceJobReport;
+use App\Enum\StatusEnum;
+use App\Repository\ServiceJobRepository;
+use App\Service\JobRunnerService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,24 +14,79 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ServiceJobRunFirstCommand extends Command
 {
     protected static $defaultName = 'service-job:run-first';
+    /**
+     * @var JobRunnerService
+     */
+    private $jobRunnerService;
+    /**
+     * @var ServiceJobRepository
+     */
+    private $serviceJobRepository;
+    /**
+     * @var int
+     */
+    private $sleepTime = 10000000;
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function __construct(
+        string $name = null,
+        JobRunnerService $jobRunnerService,
+        ServiceJobRepository $serviceJobRepository
+    ) {
+        parent::__construct($name);
+        $this->jobRunnerService = $jobRunnerService;
+        $this->serviceJobRepository = $serviceJobRepository;
+    }
+
+    protected function configure(): void
     {
-        // ... put here the code to create the user
+        $this
+            // the command help shown when running the command with the "--help" option
+            ->setHelp('Запускает первую активную команду или делает задержку')
+        ;
+    }
 
-        // this method must return an integer number with the "exit status code"
-        // of the command. You can also use these constants to make code more readable
+    protected function execute(
+        InputInterface $input,
+        OutputInterface $output
+    ): int {
 
-        // return this if there was no problem running the command
-        // (it's equivalent to returning int(0))
+        $serviceJob = $this->serviceJobRepository->findFirstActive();
+        if (!$serviceJob) {
+
+            $sleepTime = $this->sleepTime / 1000000;
+            $output->writeln("status => success");
+            $output->writeln("sleep => {$sleepTime}");
+            usleep($this->sleepTime);
+
+            return Command::SUCCESS;
+        }
+
+        $report = $this->jobRunnerService->run($serviceJob);
+
+        $serviceJob->setResult($report->getResult());
+
+        $status = $this->extractStatus($report);
+        $serviceJob->setStatus($status);
+
+        $this->serviceJobRepository->save($serviceJob);
+
+        $output->writeln("jobId => {$serviceJob->getId()}");
+        $output->writeln("commandType => {$serviceJob->getCommand()->getType()}");
+        $output->writeln("connectionIp => {$serviceJob->getConnection()->getIp()}");
+        $output->writeln("status => {$serviceJob->getStatus()}");
         return Command::SUCCESS;
+    }
 
-        // or return this if some error happened during the execution
-        // (it's equivalent to returning int(1))
-        // return Command::FAILURE;
+    /**
+     * @param ServiceJobReport $report
+     * @return string
+     */
+    private function extractStatus(ServiceJobReport $report): string
+    {
+        $status = $report->getStatus();
 
-        // or return this to indicate incorrect command usage; e.g. invalid options
-        // or missing arguments (it's equivalent to returning int(2))
-        // return Command::INVALID
+        return $status === StatusEnum::SUCCESS_TYPE
+            ? StatusEnum::SUCCESS_TYPE
+            : StatusEnum::ERROR_TYPE;
     }
 }
