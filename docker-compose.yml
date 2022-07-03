@@ -16,6 +16,20 @@ services:
     volumes:
       - ./:/project
       - .ssh:/root/.ssh
+  run-first:
+    build:
+      context: dockerfile/app
+      dockerfile: Dockerfile
+    #    image: digitalocean.com/php
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    volumes:
+      - ./:/project
+      - .ssh:/root/.ssh
+    command: "bin/console  service-job:run-first"
 
   #Nginx Service
   webserver:
