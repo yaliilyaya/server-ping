@@ -7,12 +7,12 @@
     <div class="row">
         {% for job in jobs %}
             <div class="col-md-6">
-                <div class="card card-info">
+                <div class="card card-{{job.status}}">
                     <div class="card-header">
                         <h3 class="card-title">#{{ job.id }} {{ job.connection.name }} - {{ job.connection.ip }}</h3>
                         <div class="card-tools">
                             <a href="{{ path('service-job.run', {'id': job.id}) }}"
-                               class="btn btn-info btn-sm">Run</a>
+                               class="btn btn-{{job.status}} btn-sm">Run</a>
                         </div>
                     </div>
                     <div class="card-body">

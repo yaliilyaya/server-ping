@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ServiceJob;
+use App\Entity\ServiceJobReport;
+use App\Enum\StatusEnum;
 use App\Form\ServiceJobType;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
@@ -187,18 +189,24 @@ class ServiceJobController extends AbstractController
         ServiceJobRepository $serviceJobRepository
     ): Response {
 
+        if ($serviceJob->getStatus() !== StatusEnum::DEFAULT_TYPE) {
+            return $this->json([
+                'status' => $serviceJob->getStatus()
+            ]);
+        }
+
         $report = $jobRunnerService->run($serviceJob);
+
         $serviceJob->setResult($report->getResult());
+
+        $status = $this->extractStatus($report);
+        $serviceJob->setStatus($status);
 
         $serviceJobRepository->save($serviceJob);
 
-        echo "<pre>" .
-            $serviceJob->getResult()
-            . "</pre>";
-
-        die(__FILE__ . __LINE__);
-
-        return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
+        return $this->json([
+            'status' => $serviceJob->getStatus()
+        ]);
     }
 
     /**
@@ -213,5 +221,18 @@ class ServiceJobController extends AbstractController
         die();
     }
 
+
+    /**
+     * @param ServiceJobReport $report
+     * @return string
+     */
+    private function extractStatus(ServiceJobReport $report): string
+    {
+        $status = $report->getStatus();
+
+        return $status === StatusEnum::SUCCESS_TYPE
+            ? StatusEnum::SUCCESS_TYPE
+            : StatusEnum::ERROR_TYPE;
+    }
 
 }

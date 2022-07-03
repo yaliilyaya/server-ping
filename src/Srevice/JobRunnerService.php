@@ -4,6 +4,7 @@ namespace App\Srevice;
 
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
+use App\Enum\StatusEnum;
 use App\Factory\CommandRunnerFactory;
 
 class JobRunnerService
@@ -27,6 +28,10 @@ class JobRunnerService
         $command = $serviceJob->getCommand();
 
         $runner = $this->commandRunnerFactory->create($command->getType());
-        return $runner->run($serviceJob);
+        $report = $runner->run($serviceJob);
+
+        return $report;
     }
+
+
 }
