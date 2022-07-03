@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+
+/**
+ * @see DataInterface
+ */
 trait DataTrait
 {
     /**
@@ -20,12 +24,11 @@ trait DataTrait
 
     /**
      * @param array $data
-     * @return $this
+     * @return DataInterface
      */
-    public function setData(array $data): self
+    public function setData(array $data): DataInterface
     {
         $this->data = $data;
-
         return $this;
     }
 
@@ -56,5 +59,4 @@ trait DataTrait
     {
         return isset($this->data[$field]);
     }
-
 }

@@ -1,0 +1,20 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Edit ServiceCommand #{{ service_command.id }} {% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-md-4">
+
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Edit ServiceCommand #{{ service_command.id }}</h3>
+            </div>
+            <div class="card-body">
+                {{ include('service_command/_form.html.twig', {'button_label': 'Update'}) }}
+                {{ include('service_command/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

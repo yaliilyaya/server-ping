@@ -3,7 +3,9 @@
 
 namespace App\Entity;
 
-
+/**
+ * @see ActiveInterface
+ */
 trait ActiveTrait
 {
     /**
@@ -22,10 +24,11 @@ trait ActiveTrait
 
     /**
      * @param bool $isActive
+     * @return ActiveInterface
      */
-    public function setIsActive(bool $isActive): void
+    public function setIsActive(bool $isActive): ActiveInterface
     {
         $this->isActive = $isActive;
+        return $this;
     }
-
 }

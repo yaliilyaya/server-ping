@@ -15,6 +15,7 @@ services:
       SERVICE_TAGS: dev
     volumes:
       - ./:/project
+      - .ssh:/root/.ssh
 
   #Nginx Service
   webserver:

@@ -8,11 +8,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobRepository::class)
  */
-class ServiceJob
+class ServiceJob implements
+    IdentifierInterface,
+    DataInterface,
+    ActiveInterface,
+    StatusInterface
 {
     use IdentifierTrait;
     use DataTrait;
@@ -25,19 +30,23 @@ class ServiceJob
      */
     private $result;
     /**
-     * @var ServiceConnection
+     * @var ServiceConnection|null
+     * @see ServiceConnection::jobs
      * @ManyToOne(targetEntity="App\Entity\ServiceConnection", inversedBy="jobs")
      */
     private $connection;
     /**
-     * @var ServiceCommand
-     * @ManyToOne(targetEntity="App\Entity\ServiceConnection")
+     * @var ServiceCommand|null
+     * @see ServiceCommand::jobs
+     * @ManyToOne(targetEntity="App\Entity\ServiceCommand", inversedBy="jobs")
      */
     private $command;
 
     public function __construct()
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
+        $this->setIsActive(false);
+        $this->setResult('');
     }
 
     /**
@@ -57,17 +66,33 @@ class ServiceJob
     }
 
     /**
-     * @return ServiceCommand
+     * @return ServiceConnection|null
      */
-    public function getCommand(): ServiceCommand
+    public function getConnection(): ?ServiceConnection
+    {
+        return $this->connection;
+    }
+
+    /**
+     * @param ServiceConnection|null $connection
+     */
+    public function setConnection(?ServiceConnection $connection): void
+    {
+        $this->connection = $connection;
+    }
+
+    /**
+     * @return ServiceCommand|null
+     */
+    public function getCommand(): ?ServiceCommand
     {
         return $this->command;
     }
 
     /**
-     * @param ServiceCommand $command
+     * @param ServiceCommand|null $command
      */
-    public function setCommand(ServiceCommand $command): void
+    public function setCommand(?ServiceCommand $command): void
     {
         $this->command = $command;
     }

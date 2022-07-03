@@ -28,4 +28,18 @@ services:
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # please note that last definitions always *replace* previous one
+
+    command.ping:
+        class: App\Service\Command\PingCommand
+        public: true
+
+    command.cat.etc.hosts:
+        class: App\Service\Command\CatEtsHostCommand
+        public: true
+    command.df:
+        class: App\Service\Command\DfCommand
+        public: true
+    command.php.module:
+        class: App\Service\Command\PhpModuleCommand
+        public: true

@@ -10,9 +10,15 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
- * @ORM\Entity(repositoryClass=ServerOptionRepository::class)
+ * @property string $user
+ * @property string $password
+ * @ORM\Entity(repositoryClass=\App\Repository\ServiceConnectionRepository::class)
  */
-class ServiceConnection
+class ServiceConnection implements
+    IdentifierInterface,
+    DataInterface,
+    ActiveInterface,
+    StatusInterface
 {
     use IdentifierTrait;
     use DataTrait;
@@ -30,14 +36,18 @@ class ServiceConnection
      */
     private $ip;
     /**
-     * @var Collection
-     * @OneToMany(targetEntity="App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
+     * @var Collection|ServiceJob[]
+     * @see ServiceJob::connection
+     * @OneToMany(targetEntity="\App\Entity\ServiceJob", mappedBy="connection", fetch="EXTRA_LAZY")
      */
     private $jobs;
 
     public function __construct()
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
+        $this->setIsActive(false);
+        $this->setUser('developer');
+        $this->setPassword('developer');
     }
 
     /**
@@ -86,6 +96,38 @@ class ServiceConnection
     public function setJobs(Collection $jobs): void
     {
         $this->jobs = $jobs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUser(): string
+    {
+        return $this->user ?? '';
+    }
+
+    /**
+     * @param string $user
+     */
+    public function setUser(string $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password ?? '';
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     /**

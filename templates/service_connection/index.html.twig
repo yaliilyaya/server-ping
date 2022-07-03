@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}List ServiceConnection{% endblock %}
+
+{% block page_content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">List ServiceConnection</h3>
+            <div class="card-tools">
+                <a class="btn btn-success btn-sm" href="{{ path('service-connection.new') }}">Create new</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="custom-content-below-tabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="20">Id</th>
+                            <th width="40">Status</th>
+                            <th width="300">Name</th>
+                            <th width="80">Ip</th>
+
+                            <th>Data</th>
+                            <th width="20">IsActive</th>
+
+                            <th width="80">actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for service_connection in service_connections %}
+                            <tr>
+                                <td>{{ service_connection.id }}</td>
+                                <td>{{ service_connection.status }}</td>
+                                <td>{{ service_connection.name }}</td>
+                                <td>{{ service_connection.ip }}</td>
+                                <td>{{ service_connection.data ? service_connection.data|json_encode : '' }}</td>
+                                <td>{{ service_connection.isActive ? 'Yes' : 'No' }}</td>
+
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('service-connection.show', {'id': service_connection.id}) }}"
+                                           class="btn btn-info btn-sm">show</a>
+                                        <a href="{{ path('service-connection.edit', {'id': service_connection.id}) }}"
+                                           class="btn btn-info btn-sm">edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+

@@ -13,6 +13,59 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ path('service-command.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                       Список команд
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('service-connection.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                       Список подключений
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('service-job.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                       Список задач
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item menu-is-opening menu-open">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Репорт
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: block;">
+                    <li class="nav-item">
+                        <a href="{{ path('service-command.job.reports', {type: 'ping'}) }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>ping</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('service-command.job.reports', {type: 'df'}) }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>df</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('service-command.job.reports', {type: 'cat.etc.hosts'}) }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>cat.etc.hosts</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

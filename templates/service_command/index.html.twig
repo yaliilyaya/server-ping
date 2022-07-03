@@ -1,0 +1,63 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}List ServiceCommand{% endblock %}
+
+{% block page_content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">List ServiceCommand</h3>
+            <div class="card-tools">
+                <a class="btn btn-success btn-sm" href="{{ path('service-command.new') }}" >Create new</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="custom-content-below-tabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="20">Id</th>
+                            <th width="100">Type</th>
+                            <th width="40">IsActive</th>
+                            <th>Data</th>
+                            <th width="80">actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for service_command in service_commands %}
+                            <tr>
+                                <td>{{ service_command.id }}</td>
+                                <td>{{ service_command.type }}</td>
+                                <td>{{ service_command.isActive ? 'Yes' : 'No' }}</td>
+                                <td>{{ service_command.data ? service_command.data|json_encode : '' }}</td>
+
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('service-command.job.reports', {'type': service_command.type}) }}"
+                                           class="btn btn-info btn-sm">report</a>
+                                        <a href="{{ path('service-command.show', {'id': service_command.id}) }}"
+                                           class="btn btn-info btn-sm">show</a>
+                                        <a href="{{ path('service-command.edit', {'id': service_command.id}) }}"
+                                           class="btn btn-info btn-sm">edit</a>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby=""></div>
+                <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby=""></div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

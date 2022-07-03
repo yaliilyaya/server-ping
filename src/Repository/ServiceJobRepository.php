@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\ServiceCommand;
 use App\Entity\ServiceJob;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\Collection;
 
@@ -56,6 +58,32 @@ class ServiceJobRepository extends ServiceEntityRepository
     public function save(ServiceJob $serviceJob): void
     {
         $this->getEntityManager()->persist($serviceJob);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param ServiceCommand $command
+     * @return ArrayCollection
+     */
+    public function findAllByCommand(ServiceCommand $command): ArrayCollection
+    {
+        $list = $this->findBy([
+            'isActive' => true,
+            'command' => $command
+        ]);
+
+        return new ArrayCollection($list);
+    }
+
+    /**
+     * @param Collection $jobs
+     * @return void
+     */
+    public function removeAll(Collection $jobs)
+    {
+        foreach ($jobs as $job) {
+            $this->getEntityManager()->remove($job);
+        }
         $this->getEntityManager()->flush();
     }
 }

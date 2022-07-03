@@ -24,9 +24,9 @@ trait IdentifierTrait
 
     /**
      * @param int|null $id
-     * @return IdentifierTrait
+     * @return IdentifierInterface
      */
-    public function setId(?int $id): IdentifierTrait
+    public function setId(?int $id): IdentifierInterface
     {
         $this->id = $id;
         return $this;

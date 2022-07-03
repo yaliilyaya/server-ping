@@ -1,0 +1,139 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}ServiceJob #{{ service_job.id }} {% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">ServiceJob #{{ service_job.id }} </h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Id</label>
+                            <div class="col-sm-8">
+                                {{ service_job.id }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Status</label>
+                            <div class="col-sm-8">
+                                {{ service_job.status }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">IsActive</label>
+                            <div class="col-sm-8">
+                                {{ service_job.isActive ? 'Yes' : 'No' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Data</label>
+                            <div class="col-sm-8">
+                                {{ service_job.data ? service_job.data|json_encode : '' }}
+                            </div>
+                        </div>
+{#                        <div class="form-group row">#}
+{#                            <label for="field-1" class="col-sm-4 col-form-label">Result</label>#}
+{#                            <div class="col-sm-8">#}
+{#                                {{ service_job.result }}#}
+{#                            </div>#}
+{#                        </div>#}
+                    </div>
+                </form>
+                <div class="card-footer">
+                    <div class="btn-group-vertical btn-block">
+                        {{ include('service_job/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% set service_command = service_job.command %}
+        <div class="col-md-4">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Подробная информация - service_command</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Type</label>
+                            <div class="col-sm-8">
+                                {{ service_command.type }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Id</label>
+                            <div class="col-sm-8">
+                                {{ service_command.id }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Data</label>
+                            <div class="col-sm-8">
+                                {{ service_command.data ? service_command.data|json_encode : '' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">IsActive</label>
+                            <div class="col-sm-8">
+                                {{ service_command.isActive ? 'Yes' : 'No' }}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% set service_connection = service_job.connection %}
+        <div class="col-md-4">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Подробная информация - service_connection</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                {{ service_connection.name }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Ip</label>
+                            <div class="col-sm-8">
+                                {{ service_connection.ip }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Data</label>
+                            <div class="col-sm-8">
+                                {{ service_connection.data ? service_connection.data|json_encode : '' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">IsActive</label>
+                            <div class="col-sm-8">
+                                {{ service_connection.isActive ? 'Yes' : 'No' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="field-1" class="col-sm-4 col-form-label">Status</label>
+                            <div class="col-sm-8">
+                                {{ service_connection.status }}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

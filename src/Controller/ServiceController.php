@@ -4,8 +4,8 @@ namespace App\Controller;
 use App\Entity\ServiceCommand;
 use App\Enum\StatusEnum;
 use App\Repository\ServiceConnectionRepository;
-use App\Srevice\ExtractorConfigServer;
-use App\Srevice\SaveConfigServer;
+use App\Service\ExtractorConfigServer;
+use App\Service\SaveConfigServer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +54,7 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("/config/{serviceId}", name="config")
+     * @ Route("/config/{serviceId}", name="config") TODO:: доработать, слишком сложная логика работы
      * @param ServiceConnectionRepository $serviceConnectionRepository
      * @param ExtractorConfigServer $extractorConfigServer
      * @param SaveConfigServer $saveConfigServer
