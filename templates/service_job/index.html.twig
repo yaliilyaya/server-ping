@@ -35,7 +35,7 @@
                                 <td>{{ service_job.connection.name }} {{ service_job.connection.ip }} </td>
                                 <td>{{ service_job.command.type }}</td>
 
-                                <td>{{ service_job.result }}</td>
+                                <td>{#{ service_job.result }#} -- </td>
                                 <td>{{ service_job.data ? service_job.data|json_encode : '' }}</td>
                                 <td>{{ service_job.isActive ? 'Yes' : 'No' }}</td>
 

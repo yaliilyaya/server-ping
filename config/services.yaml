@@ -37,3 +37,6 @@ services:
     command.cat.etc.hosts:
         class: App\Command\CatEtsHostCommand
         public: true
+    command.df:
+        class: App\Command\DfCommand
+        public: true
