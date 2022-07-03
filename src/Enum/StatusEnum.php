@@ -9,4 +9,5 @@ class StatusEnum
     public const SUCCESS_TYPE = 'success';
     public const WARNING_TYPE = 'warning';
     public const DANGER_TYPE = 'danger';
+    public const ERROR_TYPE = 'warning';
 }

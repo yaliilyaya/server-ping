@@ -32,10 +32,6 @@ class CommandRunnerService
      */
     public function run(CommandInterface $command): ServiceJobReport
     {
-        echo "<pre>" . print_r([
-                implode(" ",$command->getCommand())
-            ], 1) . "</pre>";
-        die(__FILE__ . __LINE__);
         $process = new Process($command->getCommand());
 
         try {
@@ -49,7 +45,7 @@ class CommandRunnerService
                 . $exception->getTraceAsString();
 
             $report = $this->serviceJobReportRepository->create();
-            $report->setStatus(StatusEnum::SUCCESS_TYPE);
+            $report->setStatus(StatusEnum::ERROR_TYPE);
             $report->setResult($message);
         }
 

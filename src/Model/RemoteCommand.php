@@ -4,6 +4,8 @@ namespace App\Model;
 
 class RemoteCommand implements CommandInterface
 {
+    use CommandToStringTrait;
+
     /**
      * @var array
      */

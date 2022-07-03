@@ -4,6 +4,7 @@ namespace App\Model;
 
 class Command implements CommandInterface
 {
+    use CommandToStringTrait;
 
     /**
      * @var array
