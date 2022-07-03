@@ -188,7 +188,7 @@ class ServiceJobController extends AbstractController
         JobRunnerService $jobRunnerService,
         ServiceJobRepository $serviceJobRepository
     ): Response {
-
+        $serviceJob->setStatus(StatusEnum::DEFAULT_TYPE);
         if ($serviceJob->getStatus() !== StatusEnum::DEFAULT_TYPE) {
             return $this->json([
                 'status' => $serviceJob->getStatus()
