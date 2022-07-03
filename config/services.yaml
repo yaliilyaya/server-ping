@@ -40,3 +40,6 @@ services:
     command.df:
         class: App\Command\DfCommand
         public: true
+    command.php.module:
+        class: App\Command\PhpModuleCommand
+        public: true
