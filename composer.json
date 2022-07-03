@@ -103,6 +103,10 @@
             "bin/console doctrine:database:create",
             "chmod 777 data/data.db",
             "bin/console --no-interaction doctrine:migrations:migrate"
+        ],
+        "ssh-www-data": [
+            "cp -R /root/.ssh /var/www/.ssh",
+            "chown www-data:www-data /var/www/.ssh/id_rsa"
         ]
     },
     "conflict": {
