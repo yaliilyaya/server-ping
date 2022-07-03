@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Command;
+namespace App\Service\Command;
 
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\Command;
-use App\Srevice\CommandRunnerService;
+use App\Service\CommandRunnerService;
 
 class PingCommand implements CommandInterface
 {

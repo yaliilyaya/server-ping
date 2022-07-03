@@ -9,7 +9,7 @@ use App\Form\ServiceJobType;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobRepository;
-use App\Srevice\JobRunnerService;
+use App\Service\JobRunnerService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -31,15 +31,15 @@ services:
     # please note that last definitions always *replace* previous one
 
     command.ping:
-        class: App\Command\PingCommand
+        class: App\Service\Command\PingCommand
         public: true
 
     command.cat.etc.hosts:
-        class: App\Command\CatEtsHostCommand
+        class: App\Service\Command\CatEtsHostCommand
         public: true
     command.df:
-        class: App\Command\DfCommand
+        class: App\Service\Command\DfCommand
         public: true
     command.php.module:
-        class: App\Command\PhpModuleCommand
+        class: App\Service\Command\PhpModuleCommand
         public: true

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Command;
+namespace App\Service\Command;
 
-use App\Entity\ServiceCommand;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Repository\ServiceJobReportRepository;

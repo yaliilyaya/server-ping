@@ -2,8 +2,8 @@
 
 namespace App\Factory;
 
-use App\Command\CommandInterface;
-use App\Command\EmptyCommand;
+use App\Service\Command\CommandInterface;
+use App\Service\Command\EmptyCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 

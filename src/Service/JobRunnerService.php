@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Srevice;
+namespace App\Service;
 
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;

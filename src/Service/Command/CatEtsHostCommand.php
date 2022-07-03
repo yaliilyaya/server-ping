@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Command;
+namespace App\Service\Command;
 
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Enum\StatusEnum;
 use App\Model\RemoteFileCommand;
 use App\Repository\ServiceJobReportRepository;
-use App\Srevice\CommandRunnerService;
+use App\Service\CommandRunnerService;
 
 class CatEtsHostCommand implements CommandInterface
 {
