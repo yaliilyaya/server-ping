@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\ServiceCommand;
+use App\Entity\ServiceJob;
+use App\Enum\StatusEnum;
 use App\Form\ServiceCommandType;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceJobRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,15 +107,39 @@ class ServiceCommandController extends AbstractController
     public function jobReport(
         string                   $type,
         ServiceJobRepository     $serviceJobRepository,
-        ServiceCommandRepository $serviceCommandRepository
+        ServiceCommandRepository $serviceCommandRepository,
+        StatusEnum $statusEnum
     ): Response {
 
         $command = $serviceCommandRepository->findByType($type);
         $jobs = $serviceJobRepository->findAllByCommand($command);
+        $lastStatus = $this->findLastStatus($jobs, $statusEnum);
 
         return $this->render('service_command/jobs.report.html.twig', [
             'jobs' => $jobs,
-            'commandType' => $type
+            'commandType' => $type,
+            'command' => $command,
+            'lastStatus' => $lastStatus
         ]);
+    }
+
+    /**
+     * @param ArrayCollection $jobs
+     * @param $statusEnum
+     * @return string
+     */
+    private function findLastStatus(ArrayCollection $jobs, $statusEnum): string
+    {
+        /** @var string[] $statues */
+        $statues = $jobs->map(function(ServiceJob $job) {
+            return $job->getStatus();
+        })->toArray();
+
+        usort($statues, function ($status1, $status2) use ($statusEnum)
+        {
+            return $statusEnum->getSortWeight($status2) - $statusEnum->getSortWeight($status1);
+        });
+
+        return current($statues) ?: StatusEnum::DEFAULT_TYPE;
     }
 }

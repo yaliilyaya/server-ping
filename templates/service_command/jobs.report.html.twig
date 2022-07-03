@@ -1,9 +1,24 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Отчёты по команде {{ commandType }} {% endblock %}
+{% block title %}Отчёты по команде {{ command.type }} {% endblock %}
 
 {% block page_content %}
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-{{lastStatus}}">
+                <div class="card-header">
+                    <h3 class="card-title">{{ command.type }}</h3>
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <a href="{{ path('service-job.ready-to-run.all', {type: command.type}) }}"
+                               class="btn btn-{{lastStatus}} btn-sm">Ready to run all</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         {% for job in jobs %}
             <div class="col-md-6">
@@ -11,8 +26,12 @@
                     <div class="card-header">
                         <h3 class="card-title">#{{ job.id }} {{ job.connection.name }} - {{ job.connection.ip }}</h3>
                         <div class="card-tools">
-                            <a href="{{ path('service-job.run', {'id': job.id}) }}"
-                               class="btn btn-{{job.status}} btn-sm">Run</a>
+                            <div class="btn-group">
+                                <a href="{{ path('service-job.ready-to-run', {'id': job.id}) }}"
+                                   class="btn btn-{{job.status}} btn-sm">Ready to run</a>
+                                <a href="{{ path('service-job.run', {'id': job.id}) }}"
+                                   class="btn btn-{{job.status}} btn-sm">Run</a>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">

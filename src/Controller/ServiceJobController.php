@@ -210,6 +210,47 @@ class ServiceJobController extends AbstractController
     }
 
     /**
+     * @Route("/readyToRun/{id}", name="service-job.ready-to-run", methods={"GET"})
+     */
+    public function readyToRun(
+        ServiceJob $serviceJob,
+        ServiceJobRepository $serviceJobRepository
+    ): Response {
+        $serviceJob->setStatus(StatusEnum::DEFAULT_TYPE);
+        $serviceJobRepository->save($serviceJob);
+
+        return $this->json([
+            'status' => $serviceJob->getStatus()
+        ]);
+    }
+
+    /**
+     * @Route("/readyToRun/all/{type}", name="service-job.ready-to-run.all", methods={"GET"})
+     */
+    public function readyToRunAll(
+        string $type,
+        ServiceJobRepository $serviceJobRepository,
+        ServiceCommandRepository $serviceCommandRepository
+    ): Response {
+        $command = $serviceCommandRepository->findByType($type);
+
+        $jobs = $serviceJobRepository->findAllByCommand($command);
+        $jobs = $jobs->filter(function (ServiceJob $job) {
+            return $job->isActive();
+        });
+        /** @var ServiceJob $job */
+        foreach ($jobs as $job) {
+            $job->setStatus(StatusEnum::DEFAULT_TYPE);
+        }
+
+        $serviceJobRepository->saveAll($jobs->toArray());
+
+        return $this->json([
+            'runJobs' => 0
+        ]);
+    }
+
+    /**
      * @Route("/report/{id}", name="service-job.report", methods={"GET"})
      */
     public function report(
