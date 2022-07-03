@@ -2,32 +2,25 @@
 
 namespace App\Command;
 
-use App\Entity\ServiceCommand;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
-use App\Enum\StatusEnum;
-use App\Repository\ServiceJobReportRepository;
-use App\Srevice\ServiceConnectionRunnerCommandService;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
+use App\Model\Command;
+use App\Srevice\CommandRunnerService;
 
 class PingCommand implements CommandInterface
 {
     /**
-     * @var ServiceConnectionRunnerCommandService
+     * @var CommandRunnerService
      */
-    private $serviceConnectionRunnerCommandService;
-    /**
-     * @var ServiceJobReportRepository
-     */
-    private $serviceJobReportRepository;
+    private $localCommandRunnerService;
 
+    /**
+     * @param CommandRunnerService $localCommandRunnerService
+     */
     public function __construct(
-        ServiceConnectionRunnerCommandService $serviceConnectionRunnerCommandService,
-        ServiceJobReportRepository $serviceJobReportRepository
+        CommandRunnerService $localCommandRunnerService
     ) {
-        $this->serviceConnectionRunnerCommandService = $serviceConnectionRunnerCommandService;
-        $this->serviceJobReportRepository = $serviceJobReportRepository;
+        $this->localCommandRunnerService = $localCommandRunnerService;
     }
 
     /**
@@ -37,32 +30,11 @@ class PingCommand implements CommandInterface
     public function run(ServiceJob $serviceJob): ServiceJobReport
     {
         $connection = $serviceJob->getConnection();
-
         $ip = $connection->getIp();
 
-        $process = new Process(['ping', '-W 10', '-c 5', $ip]);
+        $command = new Command();
+        $command->setCommandAttribute(['ping', '-W 10', '-c 5', $ip]);
 
-        try {
-            $process->mustRun();
-            $report = $this->serviceJobReportRepository->create();
-            $report->setStatus(StatusEnum::SUCCESS_TYPE);
-            $report->setResult($process->getOutput());
-        } catch (ProcessFailedException $exception) {
-            $message = $exception->getMessage()
-                . PHP_EOL
-                . $exception->getTraceAsString();
-
-            $report = $this->serviceJobReportRepository->create();
-            $report->setStatus(StatusEnum::SUCCESS_TYPE);
-            $report->setResult($message);
-        }
-
-        return $report;
-
-        die(__FILE__ . __LINE__);
-
-        $this->serviceConnectionRunnerCommandService->execCommand($connection, $command);
-
-        die(__FILE__ . __LINE__);
+        return $this->localCommandRunnerService->run($command);
     }
 }

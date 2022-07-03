@@ -33,3 +33,7 @@ services:
     command.ping:
         class: App\Command\PingCommand
         public: true
+
+    command.cat.etc.hosts:
+        class: App\Command\CatEtsHostCommand
+        public: true

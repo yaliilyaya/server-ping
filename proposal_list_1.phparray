@@ -1,0 +1,141 @@
+Array
+(
+    [procedure_id] => 7727
+    [procedure_visible_id] => 005056bc-9032-1eec-b8ca-f6c9de8e9c52
+    [type] => 1
+    [lots] => Array
+        (
+            [0] => Array
+                (
+                    [lot_id] => 7727
+                    [nmck] => 629500.36
+                )
+
+        )
+
+    [proposals] => Array
+        (
+            [0] => Array
+                (
+                    [sequence_number] => 1
+                    [proposal_number] => 32211443332_1_1
+                    [proposal_id] => 16023
+                    [proposal_date] => 08.06.2022 15:41:19
+                    [ProposalStatus] => applicant
+                    [lot_id] => 7727
+                    [files] => Array
+                        (
+                        )
+
+                    [rosatomForms] => Array
+                        (
+                            [1] => Array
+                                (
+                                    [CostSummary] => Array
+                                        (
+                                            [CostSummaryTable] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [Number] => 1000010
+                                                            [QuantityOffer] => 25.000
+                                                            [Type] => SUBST
+                                                            [Name] => Переходник  F-116
+                                                            [RefID] => 0000000001
+                                                            [PlaceDeliv] => Россия, 624250, Свердловская, Заречный г, промплощадка  Филиал АО «Концерн Росэнергоатом» "Белоярская атомная станция "
+                                                            [Country] => Китай
+                                                            [PlaceShip] => Россия, 413850, Саратовская, Балаково г, улица Братьев Захаровых 142
+                                                            [ProdName] => Переходник F-116
+                                                            [TypeTransport] => Автомобиль
+                                                            [Unit] => ШТ
+                                                            [Fields] => Array
+                                                                (
+                                                                    [0] => Array
+                                                                        (
+                                                                            [Name] => DELIV_T
+                                                                            [Value] => 20220930
+                                                                        )
+
+                                                                )
+
+                                                        )
+
+                                                    )
+
+                                            [ServiceCalculationTable] => Array
+                                                (
+                                                )
+
+                                        )
+
+                                    [TechnicalProposal] => Array
+                                        (
+                                            [files] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [id] => 1672947
+                                                            [filename] => тех.пред..pdf
+                                                            [description] =>
+                                                            [url] => https://etp-ets.ru/223/smsp/zp/rosatom/request-form/?action=download_file&file_id=1672947&ignore_auth=1
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [ParticipantRequest1] => Array
+                                        (
+                                            [files] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [id] => 1672939
+                                                            [filename] => Заявка ч1.pdf
+                                                            [description] =>
+                                                            [url] => https://etp-ets.ru/223/smsp/zp/rosatom/request-form/?action=download_file&file_id=1672939&ignore_auth=1
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [ProductRequirementList] => Array
+                                        (
+                                            [ProductRequirement] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [ProductRequirementId] => 005056BCB13B1EDCB4E8091194584F22
+                                                            [RequirementValue] => Продукция  соответствует требованиям, указанным в томе 2 «Техническая часть"
+                                                        )
+
+                                                )
+
+                                            [files] => Array
+                                                (
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [position_list] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [positionId] => 0000000001
+                                    [quantity] => 25.000
+                                    [vat] => 20
+                                )
+                        )
+
+                    [isFrame] =>
+                )
+
+        )
+
+    [source] => 223smsp_zp_rosatom
+)
