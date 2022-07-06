@@ -43,3 +43,6 @@ services:
     command.php.module:
         class: App\Service\Command\PhpModuleCommand
         public: true
+    command.mysql.table.size:
+        class: App\Service\Command\MysqlTableSizeCommand
+        public: true
