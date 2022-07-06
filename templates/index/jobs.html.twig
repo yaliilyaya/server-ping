@@ -35,7 +35,12 @@
                                     </a>
                                 </td>
                                 <td>{{ job.command.type }}</td>
-                                <td>{{ job.isActive ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    {% set isActiveStatus = job.isActive ? 'success' : 'danger' %}
+                                    <a href="{{ path('job.changeActive', {id: job.id}) }}"  class="btn btn-{{isActiveStatus}} btn-sm">
+                                        {{ job.isActive ? 'Yes' : 'No' }}
+                                    </a>
+                                </td>
                                 <td>{{ job.status }}</td>
                                 <td>{{ job.data | json_encode }}</td>
                                 <td>

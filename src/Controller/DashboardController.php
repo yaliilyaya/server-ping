@@ -4,12 +4,14 @@ namespace App\Controller;
 use App\Entity\ServiceCommand;
 use App\Entity\ServiceConnection;
 use App\Entity\ServiceJob;
+use App\Enum\StatusEnum;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -81,6 +83,28 @@ class DashboardController extends AbstractController
         return $commands->filter(function (ServiceCommand $command) {
             return $command->isActive();
         });
+    }
+
+    /**
+     * @Route("/job/changeActive/{id}", name="job.changeActive", methods={"GET"})
+     */
+    public function jobChangeActive(
+        int $id,
+        ServiceJobRepository $serviceJobRepository
+    ): Response {
+        $serviceJob = $serviceJobRepository->find($id);
+        $isActive = $serviceJob->isActive();
+        $serviceJob->setIsActive(!$isActive);
+        if ($serviceJob->isActive()) {
+            $serviceJob->setStatus(StatusEnum::DEFAULT_TYPE);
+        }
+
+        $serviceJobRepository->save($serviceJob);
+
+        /** @see \App\Controller\DashboardController::job */
+        return $this->redirectToRoute('jobs', [
+            'serviceId' => $serviceJob->getConnection()->getId()
+        ]);
     }
 
 }
