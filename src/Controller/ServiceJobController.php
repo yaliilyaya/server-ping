@@ -129,10 +129,10 @@ class ServiceJobController extends AbstractController
         EntityManagerInterface      $entityManager,
         ServiceCommandRepository    $serviceCommandRepository,
         ServiceConnectionRepository $serviceConnectionRepository,
+        ServiceJobRepository        $serviceJobRepository,
                                     $connectionId,
                                     $commandType
-    ): Response
-    {
+    ): Response {
         $serviceJob = new ServiceJob();
 
         $form = $this->createForm(ServiceJobType::class, $serviceJob);
@@ -142,28 +142,18 @@ class ServiceJobController extends AbstractController
         $command = $serviceCommandRepository->findByType($commandType);
         $serviceJob->setConnection($connection);
         $serviceJob->setCommand($command);
+        $serviceJob->setData($command->getData());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $entityManager->persist($serviceJob);
-                $entityManager->flush();
+        $serviceJobRepository->save($serviceJob);
 
-                return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
-            } catch (UniqueConstraintViolationException $exception) {
-                $form->get('commandId')
-                    ->addError(new FormError($exception->getMessage()));
-            }
-        } else {
-            $form->get('connectionId')
-                ->setData($connection->getId());
-            $form->get('commandId')
-                ->setData($command->getId());
+        $redirect = $request->get('redirect');
+        if ($redirect) {
+            return $this->redirectToRoute($redirect, [
+                'serviceId' => $serviceJob->getConnection()->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('service_job/new.html.twig', [
-            'service_job' => $serviceJob,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('service-job.index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -309,7 +299,4 @@ class ServiceJobController extends AbstractController
             ? StatusEnum::SUCCESS_TYPE
             : StatusEnum::ERROR_TYPE;
     }
-
-
-
 }
