@@ -67,21 +67,24 @@ class ServiceJobRunFirstCommand extends Command
 
             return Command::SUCCESS;
         }
+        do {
+            $reports = $this->jobRunnerService->run($serviceJob);
 
-        $reports = $this->jobRunnerService->run($serviceJob);
+            $reports->setServiceJob($serviceJob);
+            $this->serviceJobReportRepository->saveAll($reports);
 
-        $reports->setServiceJob($serviceJob);
-        $this->serviceJobReportRepository->saveAll($reports);
+            $status = $this->extractStatus($reports->current());
+            $serviceJob->setStatus($status);
 
-        $status = $this->extractStatus($reports->current());
-        $serviceJob->setStatus($status);
+            $this->serviceJobRepository->save($serviceJob);
 
-        $this->serviceJobRepository->save($serviceJob);
+            $output->writeln("jobId => {$serviceJob->getId()}");
+            $output->writeln("commandType => {$serviceJob->getCommand()->getType()}");
+            $output->writeln("connectionIp => {$serviceJob->getConnection()->getIp()}");
+            $output->writeln("status => {$serviceJob->getStatus()}");
+        } while ($serviceJob = $this->serviceJobRepository->findFirstActive());
 
-        $output->writeln("jobId => {$serviceJob->getId()}");
-        $output->writeln("commandType => {$serviceJob->getCommand()->getType()}");
-        $output->writeln("connectionIp => {$serviceJob->getConnection()->getIp()}");
-        $output->writeln("status => {$serviceJob->getStatus()}");
+
         return Command::SUCCESS;
     }
 
