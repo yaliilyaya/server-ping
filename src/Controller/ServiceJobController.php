@@ -290,6 +290,11 @@ class ServiceJobController extends AbstractController
     ): Response {
 
         echo "<pre>" . $serviceJob->getResult() . "</pre>";
+
+        foreach ($serviceJob->getReports() as $report) {
+            echo "<pre>" . $report->getResult() . "</pre>";
+        }
+
         die();
     }
 

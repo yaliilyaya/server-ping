@@ -73,14 +73,10 @@ class ServiceJobRunFirstCommand extends Command
         $reports->setServiceJob($serviceJob);
         $this->serviceJobReportRepository->saveAll($reports);
 
-        $serviceJob->setResult($reports->current()->getResult());
-
         $status = $this->extractStatus($reports->current());
         $serviceJob->setStatus($status);
 
-
-
-        //$this->serviceJobRepository->save($serviceJob);
+        $this->serviceJobRepository->save($serviceJob);
 
         $output->writeln("jobId => {$serviceJob->getId()}");
         $output->writeln("commandType => {$serviceJob->getCommand()->getType()}");
