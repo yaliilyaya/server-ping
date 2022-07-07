@@ -5,6 +5,7 @@ namespace App\Service\Command;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Repository\ServiceJobReportRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class EmptyCommand implements CommandInterface
 {
@@ -23,10 +24,12 @@ class EmptyCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ServiceJobReport
+     * @return ArrayCollection
      */
-    public function run(ServiceJob $serviceJob): ServiceJobReport
+    public function run(ServiceJob $serviceJob): ArrayCollection
     {
-        return $this->serviceJobReportRepository->create();
+        $report = $this->serviceJobReportRepository->create();
+
+        return new ArrayCollection([$report]);
     }
 }

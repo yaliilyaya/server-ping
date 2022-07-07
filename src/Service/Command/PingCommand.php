@@ -6,6 +6,7 @@ use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\Command;
 use App\Service\CommandRunnerService;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class PingCommand implements CommandInterface
 {
@@ -25,9 +26,9 @@ class PingCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ServiceJobReport
+     * @return ArrayCollection
      */
-    public function run(ServiceJob $serviceJob): ServiceJobReport
+    public function run(ServiceJob $serviceJob): ArrayCollection
     {
         $connection = $serviceJob->getConnection();
         $ip = $connection->getIp();
@@ -35,6 +36,9 @@ class PingCommand implements CommandInterface
         $command = new Command();
         $command->setCommandAttribute(['ping', '-W 10', '-c 5', $ip]);
 
-        return $this->localCommandRunnerService->run($command);
+
+        $report = $this->localCommandRunnerService->run($command);
+
+        return new ArrayCollection([$report]);
     }
 }

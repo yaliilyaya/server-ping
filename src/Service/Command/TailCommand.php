@@ -8,7 +8,7 @@ use App\Model\RemoteCommand;
 use App\Service\CommandRunnerService;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class PhpModuleCommand implements CommandInterface
+class TailCommand implements CommandInterface
 {
 
     /**
@@ -33,17 +33,32 @@ class PhpModuleCommand implements CommandInterface
     {
         $connection = $serviceJob->getConnection();
 
-        $remoteFileCommand = new RemoteCommand();
+        $data = $serviceJob->getData();
+        $files = $data['files'] ?? [];
 
-        $remoteFileCommand->setCommandAttribute(['php', '-m']);
-        $remoteFileCommand->setConnectParam([
+        $params = [
             $connection->getUser(),
             $connection->getIp(),
             $connection->getPassword()
-        ]);
+        ];
 
-        $report = $this->commandRunnerService->run($remoteFileCommand);
+        $reports = new ArrayCollection();
 
-        return new ArrayCollection([$report]);
+        foreach ($files as $file) {
+            $report = $this->execRemoteFileContent($file, $params);
+            $reports->add($report);
+        }
+
+        return $reports;
+    }
+
+    private function execRemoteFileContent($file, array $params)
+    {
+        $remoteFileCommand = new RemoteCommand();
+
+        $remoteFileCommand->setCommandAttribute(['tail', '-n 10', $file]);
+        $remoteFileCommand->setConnectParam($params);
+
+        return $this->commandRunnerService->run($remoteFileCommand);
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\Command;
 use App\Service\CommandRunnerService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Connection;
 
@@ -26,9 +27,9 @@ class MysqlTableSizeCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ServiceJobReport
+     * @return ArrayCollection
      */
-    public function run(ServiceJob $serviceJob): ServiceJobReport
+    public function run(ServiceJob $serviceJob): ArrayCollection
     {
         echo "<pre>" . print_r([ ], 1) . "</pre>";
 
@@ -65,6 +66,7 @@ class MysqlTableSizeCommand implements CommandInterface
                 $report->getResult()
             ], 1) . "</pre>";
         die(__FILE__ . __LINE__);
-        return $report;
+
+        return new ArrayCollection([$report]);
     }
 }

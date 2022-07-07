@@ -46,3 +46,6 @@ services:
     command.mysql.table.size:
         class: App\Service\Command\MysqlTableSizeCommand
         public: true
+    command.tail:
+        class: App\Service\Command\TailCommand
+        public: true

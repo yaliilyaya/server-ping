@@ -8,6 +8,7 @@ use App\Enum\StatusEnum;
 use App\Model\RemoteFileCommand;
 use App\Repository\ServiceJobReportRepository;
 use App\Service\CommandRunnerService;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class CatEtsHostCommand implements CommandInterface
 {
@@ -34,9 +35,9 @@ class CatEtsHostCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ServiceJobReport
+     * @return ArrayCollection
      */
-    public function run(ServiceJob $serviceJob): ServiceJobReport
+    public function run(ServiceJob $serviceJob): ArrayCollection
     {
         $connection = $serviceJob->getConnection();
 
@@ -51,8 +52,11 @@ class CatEtsHostCommand implements CommandInterface
 
         $report = $this->commandRunnerService->run($remoteFileCommand);
 
+        $reports = new ArrayCollection();
+        $reports->add($report);
+
         if ($report->getStatus() !== StatusEnum::SUCCESS_TYPE) {
-            return $report;
+            return $reports;
         }
 
         $content = file_get_contents($remoteFileCommand->getTmpFilePath());
@@ -60,7 +64,8 @@ class CatEtsHostCommand implements CommandInterface
         $report = $this->serviceJobReportRepository->create();
         $report->setStatus(StatusEnum::SUCCESS_TYPE);
         $report->setResult($content);
+        $reports->add($report);
 
-        return $report;
+        return $reports;
     }
 }

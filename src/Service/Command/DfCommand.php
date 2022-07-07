@@ -6,6 +6,7 @@ use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\RemoteCommand;
 use App\Service\CommandRunnerService;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class DfCommand implements CommandInterface
 {
@@ -26,9 +27,9 @@ class DfCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ServiceJobReport
+     * @return ArrayCollection
      */
-    public function run(ServiceJob $serviceJob): ServiceJobReport
+    public function run(ServiceJob $serviceJob): ArrayCollection
     {
         $connection = $serviceJob->getConnection();
 
@@ -41,6 +42,8 @@ class DfCommand implements CommandInterface
             $connection->getPassword()
         ]);
 
-        return $this->commandRunnerService->run($remoteFileCommand);
+        $report = $this->commandRunnerService->run($remoteFileCommand);
+
+        return new ArrayCollection([$report]);
     }
 }
