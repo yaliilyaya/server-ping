@@ -7,15 +7,42 @@ use App\Entity\ServiceJobReport;
 use App\Model\Command;
 use App\Service\CommandRunnerService;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\DBAL\Connection;
 
 class MysqlTableSizeCommand implements CommandInterface
 {
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    public function __construct(Connection $connection)
+    {
+
+
+
+        $this->connection = $connection;
+    }
+
     /**
      * @param ServiceJob $serviceJob
      * @return ServiceJobReport
      */
     public function run(ServiceJob $serviceJob): ServiceJobReport
     {
+        echo "<pre>" . print_r([ ], 1) . "</pre>";
+
+
+//        $connectionParams = [
+//            'dbname' => 'mydb',
+//            'user' => 'user',
+//            'password' => 'secret',
+//            'host' => 'localhost',
+//            'driver' => 'pdo_mysql',
+//        ];
+//        $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams);
+//
+//
         $connection = $serviceJob->getConnection();
         $ip = $connection->getIp();
 
