@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Collection\ServiceJobReportCollection;
+use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,6 +50,18 @@ class ServiceJobReportRepository extends ServiceEntityRepository
     public function save(ServiceJobReport $serviceJob): void
     {
         $this->getEntityManager()->persist($serviceJob);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param Collection $jobs
+     * @return void
+     */
+    public function removeAll(Collection $jobs)
+    {
+        foreach ($jobs as $job) {
+            $this->getEntityManager()->remove($job);
+        }
         $this->getEntityManager()->flush();
     }
 }

@@ -53,11 +53,8 @@ class CatEtsHostCommand implements CommandInterface
 
         $report = $this->commandRunnerService->run($remoteFileCommand);
 
-        $reports = new ServiceJobReportCollection();
-        $reports->add($report);
-
         if ($report->getStatus() !== StatusEnum::SUCCESS_TYPE) {
-            return $reports;
+            return new ServiceJobReportCollection([$report]);
         }
 
         $content = file_get_contents($remoteFileCommand->getTmpFilePath());
@@ -65,8 +62,7 @@ class CatEtsHostCommand implements CommandInterface
         $report = $this->serviceJobReportRepository->create();
         $report->setStatus(StatusEnum::SUCCESS_TYPE);
         $report->setResult($content);
-        $reports->add($report);
 
-        return $reports;
+        return new ServiceJobReportCollection([$report]);
     }
 }

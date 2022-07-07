@@ -11,11 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ServiceJobReportCollection extends ArrayCollection
 {
-
     public function setServiceJob(ServiceJob $serviceJob)
     {
         $this->forAll(function ($key, ServiceJobReport $report) use ($serviceJob) {
             $report->setJob($serviceJob);
+            return true;
         });
     }
 }

@@ -29,13 +29,21 @@ class ServiceJobResultSaveService
         $this->serviceJobReportRepository = $serviceJobReportRepository;
     }
 
+    /**
+     * @param ServiceJob $serviceJob
+     * @param ServiceJobReportCollection $reports
+     * @return void
+     */
     public function save(ServiceJob $serviceJob, ServiceJobReportCollection $reports)
     {
+        $this->serviceJobReportRepository->removeAll($serviceJob->getReports());
+
         $reports->setServiceJob($serviceJob);
         $serviceJob->setReports($reports);
 
         $status = $this->extractStatus($reports->current());
         $serviceJob->setStatus($status);
+
 
         $this->serviceJobRepository->save($serviceJob);
     }
