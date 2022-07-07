@@ -11,6 +11,7 @@ use App\Repository\ServiceConnectionRepository;
 use App\Repository\ServiceJobReportRepository;
 use App\Repository\ServiceJobRepository;
 use App\Service\JobRunnerService;
+use App\Service\ServiceJobResultSaveService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -171,49 +172,12 @@ class ServiceJobController extends AbstractController
     }
 
     /**
-     * @Route("/run/first/", name="service-job.run.first", methods={"GET"})
-     */
-    public function runFirst(
-        JobRunnerService $jobRunnerService,
-        ServiceJobRepository $serviceJobRepository,
-        ServiceJobReportRepository $serviceJobReportRepository
-    ): Response {
-
-        $serviceJob = $serviceJobRepository->findFirstActive();
-        if (!$serviceJob) {
-            return $this->json([
-                'status' => StatusEnum::SUCCESS_TYPE
-            ]);
-        }
-
-        $reports = $jobRunnerService->run($serviceJob);
-
-        $reports->setServiceJob($serviceJob);
-        $serviceJobReportRepository->saveAll($reports);
-
-
-        $status = $this->extractStatus($reports->current());
-        $serviceJob->setStatus($status);
-
-        $serviceJobRepository->save($serviceJob);
-
-        return $this->json([
-            'jobId' => $serviceJob->getId(),
-            'commandType' => $serviceJob->getCommand()->getType(),
-            'connectionIp' => $serviceJob->getConnection()->getIp(),
-            'status' => $serviceJob->getStatus()
-        ]);
-    }
-
-    /**
      * @Route("/run/{id}", name="service-job.run", methods={"GET"})
      */
     public function run(
-        Request    $request,
         ServiceJob $serviceJob,
         JobRunnerService $jobRunnerService,
-        ServiceJobRepository $serviceJobRepository,
-        ServiceJobReportRepository $serviceJobReportRepository
+        ServiceJobResultSaveService $serviceJobResultSaveService
     ): Response {
         $serviceJob->setStatus(StatusEnum::DEFAULT_TYPE);
         if ($serviceJob->getStatus() !== StatusEnum::DEFAULT_TYPE) {
@@ -223,15 +187,7 @@ class ServiceJobController extends AbstractController
         }
 
         $reports = $jobRunnerService->run($serviceJob);
-
-        $reports->setServiceJob($serviceJob);
-        $serviceJobReportRepository->saveAll($reports);
-
-
-        $status = $this->extractStatus($reports->current());
-        $serviceJob->setStatus($status);
-
-        $serviceJobRepository->save($serviceJob);
+        $serviceJobResultSaveService->save($serviceJob, $reports);
 
         return $this->json([
             'status' => $serviceJob->getStatus()
@@ -299,16 +255,4 @@ class ServiceJobController extends AbstractController
     }
 
 
-    /**
-     * @param ServiceJobReport $report
-     * @return string
-     */
-    private function extractStatus(ServiceJobReport $report): string
-    {
-        $status = $report->getStatus();
-
-        return $status === StatusEnum::SUCCESS_TYPE
-            ? StatusEnum::SUCCESS_TYPE
-            : StatusEnum::ERROR_TYPE;
-    }
 }

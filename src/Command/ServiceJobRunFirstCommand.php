@@ -7,6 +7,7 @@ use App\Enum\StatusEnum;
 use App\Repository\ServiceJobReportRepository;
 use App\Repository\ServiceJobRepository;
 use App\Service\JobRunnerService;
+use App\Service\ServiceJobResultSaveService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,6 +17,10 @@ class ServiceJobRunFirstCommand extends Command
 {
     protected static $defaultName = 'service-job:run-first';
     /**
+     * @var int
+     */
+    private $sleepTime = 10000000;
+    /**
      * @var JobRunnerService
      */
     private $jobRunnerService;
@@ -23,25 +28,22 @@ class ServiceJobRunFirstCommand extends Command
      * @var ServiceJobRepository
      */
     private $serviceJobRepository;
+
     /**
-     * @var int
+     * @var ServiceJobResultSaveService
      */
-    private $sleepTime = 10000000;
-    /**
-     * @var ServiceJobReportRepository
-     */
-    private $serviceJobReportRepository;
+    private $serviceJobResultSaveService;
 
     public function __construct(
         string $name = null,
         JobRunnerService $jobRunnerService,
         ServiceJobRepository $serviceJobRepository,
-        ServiceJobReportRepository $serviceJobReportRepository
+        ServiceJobResultSaveService $serviceJobResultSaveService
     ) {
         parent::__construct($name);
         $this->jobRunnerService = $jobRunnerService;
         $this->serviceJobRepository = $serviceJobRepository;
-        $this->serviceJobReportRepository = $serviceJobReportRepository;
+        $this->serviceJobResultSaveService = $serviceJobResultSaveService;
     }
 
     protected function configure(): void
@@ -69,14 +71,7 @@ class ServiceJobRunFirstCommand extends Command
         }
         do {
             $reports = $this->jobRunnerService->run($serviceJob);
-
-            $reports->setServiceJob($serviceJob);
-            $this->serviceJobReportRepository->saveAll($reports);
-
-            $status = $this->extractStatus($reports->current());
-            $serviceJob->setStatus($status);
-
-            $this->serviceJobRepository->save($serviceJob);
+            $this->serviceJobResultSaveService->save($serviceJob, $reports);
 
             $output->writeln("jobId => {$serviceJob->getId()}");
             $output->writeln("commandType => {$serviceJob->getCommand()->getType()}");

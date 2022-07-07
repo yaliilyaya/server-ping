@@ -115,6 +115,7 @@ class ServiceCommandController extends AbstractController
         $jobs = $serviceJobRepository->findAllByCommand($command);
         $lastStatus = $this->findLastStatus($jobs, $statusEnum);
 
+       dump($jobs);
         return $this->render('service_command/jobs.report.html.twig', [
             'jobs' => $jobs,
             'commandType' => $type,

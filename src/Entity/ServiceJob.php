@@ -46,7 +46,7 @@ class ServiceJob implements
     /**
      * @var ServiceJobReportCollection
      * @see ServiceJobReport::job
-     * @OneToMany(targetEntity="\App\Entity\ServiceJobReport", mappedBy="job", fetch="EXTRA_LAZY")
+     * @OneToMany(targetEntity="\App\Entity\ServiceJobReport", mappedBy="job", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     private $reports;
 
