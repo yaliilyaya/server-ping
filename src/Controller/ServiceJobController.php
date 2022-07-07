@@ -186,9 +186,9 @@ class ServiceJobController extends AbstractController
 
         $report = $jobRunnerService->run($serviceJob);
 
-        $serviceJob->setResult($report->getResult());
+        $serviceJob->setResult($report->current()->getResult());
 
-        $status = $this->extractStatus($report);
+        $status = $this->extractStatus($report->current());
         $serviceJob->setStatus($status);
 
         $serviceJobRepository->save($serviceJob);
@@ -219,9 +219,9 @@ class ServiceJobController extends AbstractController
 
         $report = $jobRunnerService->run($serviceJob);
 
-        $serviceJob->setResult($report->getResult());
+        $serviceJob->setResult($report->current()->getResult());
 
-        $status = $this->extractStatus($report);
+        $status = $this->extractStatus($report->current());
         $serviceJob->setStatus($status);
 
         $serviceJobRepository->save($serviceJob);

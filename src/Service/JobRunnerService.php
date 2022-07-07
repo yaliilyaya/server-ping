@@ -6,6 +6,7 @@ use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Enum\StatusEnum;
 use App\Factory\CommandRunnerFactory;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class JobRunnerService
 {
@@ -21,16 +22,14 @@ class JobRunnerService
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ServiceJobReport
+     * @return ArrayCollection
      */
-    public function run(ServiceJob $serviceJob): ServiceJobReport
+    public function run(ServiceJob $serviceJob): ArrayCollection
     {
         $command = $serviceJob->getCommand();
 
         $runner = $this->commandRunnerFactory->create($command->getType());
-        $report = $runner->run($serviceJob);
-
-        return $report;
+        return $runner->run($serviceJob);
     }
 
 

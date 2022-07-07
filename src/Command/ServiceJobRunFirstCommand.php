@@ -63,7 +63,7 @@ class ServiceJobRunFirstCommand extends Command
 
         $report = $this->jobRunnerService->run($serviceJob);
 
-        $serviceJob->setResult($report->getResult());
+        $serviceJob->setResult($report->current()->getResult());
 
         $status = $this->extractStatus($report);
         $serviceJob->setStatus($status);
