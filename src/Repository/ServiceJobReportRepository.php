@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJobReport;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,9 +33,9 @@ class ServiceJobReportRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ServiceJobReport[] $serverOptions
+     * @param ServiceJobReportCollection $serverOptions
      */
-    public function saveAll(array $serverOptions): void
+    public function saveAll(ServiceJobReportCollection $serverOptions): void
     {
         foreach ($serverOptions as $serverOption) {
             $this->getEntityManager()->persist($serverOption);

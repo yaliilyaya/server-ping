@@ -2,6 +2,7 @@
 
 namespace App\Service\Command;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\RemoteCommand;
@@ -27,9 +28,9 @@ class DfCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ArrayCollection
+     * @return ServiceJobReportCollection
      */
-    public function run(ServiceJob $serviceJob): ArrayCollection
+    public function run(ServiceJob $serviceJob): ServiceJobReportCollection
     {
         $connection = $serviceJob->getConnection();
 
@@ -44,6 +45,6 @@ class DfCommand implements CommandInterface
 
         $report = $this->commandRunnerService->run($remoteFileCommand);
 
-        return new ArrayCollection([$report]);
+        return new ServiceJobReportCollection([$report]);
     }
 }

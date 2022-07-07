@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Enum\StatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -43,7 +44,7 @@ class ServiceJob implements
      */
     private $command;
     /**
-     * @var Collection|ServiceJobReport[]
+     * @var ServiceJobReportCollection
      * @see ServiceJobReport::job
      * @OneToMany(targetEntity="\App\Entity\ServiceJobReport", mappedBy="job", fetch="EXTRA_LAZY")
      */
@@ -102,6 +103,24 @@ class ServiceJob implements
     public function setCommand(?ServiceCommand $command): void
     {
         $this->command = $command;
+    }
+
+    /**
+     * @return ServiceJobReportCollection
+     */
+    public function getReports(): ServiceJobReportCollection
+    {
+        return $this->reports instanceof ServiceJobReportCollection
+            ? $this->reports
+            : new ServiceJobReportCollection($this->reports->toArray());
+    }
+
+    /**
+     * @param ServiceJobReportCollection $reports
+     */
+    public function setReports(ServiceJobReportCollection $reports): void
+    {
+        $this->reports = $reports;
     }
 
     /**

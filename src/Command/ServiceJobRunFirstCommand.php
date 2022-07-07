@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\ServiceJobReport;
 use App\Enum\StatusEnum;
+use App\Repository\ServiceJobReportRepository;
 use App\Repository\ServiceJobRepository;
 use App\Service\JobRunnerService;
 use Symfony\Component\Console\Command\Command;
@@ -26,15 +27,21 @@ class ServiceJobRunFirstCommand extends Command
      * @var int
      */
     private $sleepTime = 10000000;
+    /**
+     * @var ServiceJobReportRepository
+     */
+    private $serviceJobReportRepository;
 
     public function __construct(
         string $name = null,
         JobRunnerService $jobRunnerService,
-        ServiceJobRepository $serviceJobRepository
+        ServiceJobRepository $serviceJobRepository,
+        ServiceJobReportRepository $serviceJobReportRepository
     ) {
         parent::__construct($name);
         $this->jobRunnerService = $jobRunnerService;
         $this->serviceJobRepository = $serviceJobRepository;
+        $this->serviceJobReportRepository = $serviceJobReportRepository;
     }
 
     protected function configure(): void
@@ -61,14 +68,19 @@ class ServiceJobRunFirstCommand extends Command
             return Command::SUCCESS;
         }
 
-        $report = $this->jobRunnerService->run($serviceJob);
+        $reports = $this->jobRunnerService->run($serviceJob);
 
-        $serviceJob->setResult($report->current()->getResult());
+        $reports->setServiceJob($serviceJob);
+        $this->serviceJobReportRepository->saveAll($reports);
 
-        $status = $this->extractStatus($report->current());
+        $serviceJob->setResult($reports->current()->getResult());
+
+        $status = $this->extractStatus($reports->current());
         $serviceJob->setStatus($status);
 
-        $this->serviceJobRepository->save($serviceJob);
+
+
+        //$this->serviceJobRepository->save($serviceJob);
 
         $output->writeln("jobId => {$serviceJob->getId()}");
         $output->writeln("commandType => {$serviceJob->getCommand()->getType()}");

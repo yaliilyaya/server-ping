@@ -8,6 +8,7 @@ use App\Enum\StatusEnum;
 use App\Form\ServiceJobType;
 use App\Repository\ServiceCommandRepository;
 use App\Repository\ServiceConnectionRepository;
+use App\Repository\ServiceJobReportRepository;
 use App\Repository\ServiceJobRepository;
 use App\Service\JobRunnerService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -174,7 +175,8 @@ class ServiceJobController extends AbstractController
      */
     public function runFirst(
         JobRunnerService $jobRunnerService,
-        ServiceJobRepository $serviceJobRepository
+        ServiceJobRepository $serviceJobRepository,
+        ServiceJobReportRepository $serviceJobReportRepository
     ): Response {
 
         $serviceJob = $serviceJobRepository->findFirstActive();
@@ -184,11 +186,13 @@ class ServiceJobController extends AbstractController
             ]);
         }
 
-        $report = $jobRunnerService->run($serviceJob);
+        $reports = $jobRunnerService->run($serviceJob);
 
-        $serviceJob->setResult($report->current()->getResult());
+        $reports->setServiceJob($serviceJob);
+        $serviceJobReportRepository->saveAll($reports);
 
-        $status = $this->extractStatus($report->current());
+
+        $status = $this->extractStatus($reports->current());
         $serviceJob->setStatus($status);
 
         $serviceJobRepository->save($serviceJob);
@@ -208,7 +212,8 @@ class ServiceJobController extends AbstractController
         Request    $request,
         ServiceJob $serviceJob,
         JobRunnerService $jobRunnerService,
-        ServiceJobRepository $serviceJobRepository
+        ServiceJobRepository $serviceJobRepository,
+        ServiceJobReportRepository $serviceJobReportRepository
     ): Response {
         $serviceJob->setStatus(StatusEnum::DEFAULT_TYPE);
         if ($serviceJob->getStatus() !== StatusEnum::DEFAULT_TYPE) {
@@ -217,11 +222,13 @@ class ServiceJobController extends AbstractController
             ]);
         }
 
-        $report = $jobRunnerService->run($serviceJob);
+        $reports = $jobRunnerService->run($serviceJob);
 
-        $serviceJob->setResult($report->current()->getResult());
+        $reports->setServiceJob($serviceJob);
+        $serviceJobReportRepository->saveAll($reports);
 
-        $status = $this->extractStatus($report->current());
+
+        $status = $this->extractStatus($reports->current());
         $serviceJob->setStatus($status);
 
         $serviceJobRepository->save($serviceJob);

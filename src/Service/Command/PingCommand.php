@@ -2,6 +2,7 @@
 
 namespace App\Service\Command;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\Command;
@@ -26,9 +27,9 @@ class PingCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ArrayCollection
+     * @return ServiceJobReportCollection
      */
-    public function run(ServiceJob $serviceJob): ArrayCollection
+    public function run(ServiceJob $serviceJob): ServiceJobReportCollection
     {
         $connection = $serviceJob->getConnection();
         $ip = $connection->getIp();
@@ -39,6 +40,6 @@ class PingCommand implements CommandInterface
 
         $report = $this->localCommandRunnerService->run($command);
 
-        return new ArrayCollection([$report]);
+        return new ServiceJobReportCollection([$report]);
     }
 }

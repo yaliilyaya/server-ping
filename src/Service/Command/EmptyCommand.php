@@ -2,6 +2,7 @@
 
 namespace App\Service\Command;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Repository\ServiceJobReportRepository;
@@ -24,12 +25,12 @@ class EmptyCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ArrayCollection
+     * @return ServiceJobReportCollection
      */
-    public function run(ServiceJob $serviceJob): ArrayCollection
+    public function run(ServiceJob $serviceJob): ServiceJobReportCollection
     {
         $report = $this->serviceJobReportRepository->create();
 
-        return new ArrayCollection([$report]);
+        return new ServiceJobReportCollection([$report]);
     }
 }

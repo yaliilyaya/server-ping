@@ -2,6 +2,7 @@
 
 namespace App\Service\Command;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\Command;
@@ -27,9 +28,9 @@ class MysqlTableSizeCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ArrayCollection
+     * @return ServiceJobReportCollection
      */
-    public function run(ServiceJob $serviceJob): ArrayCollection
+    public function run(ServiceJob $serviceJob): ServiceJobReportCollection
     {
         echo "<pre>" . print_r([ ], 1) . "</pre>";
 
@@ -67,6 +68,6 @@ class MysqlTableSizeCommand implements CommandInterface
             ], 1) . "</pre>";
         die(__FILE__ . __LINE__);
 
-        return new ArrayCollection([$report]);
+        return new ServiceJobReportCollection([$report]);
     }
 }

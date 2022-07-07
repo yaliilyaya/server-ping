@@ -2,6 +2,7 @@
 
 namespace App\Service\Command;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Model\RemoteCommand;
@@ -27,9 +28,9 @@ class TailCommand implements CommandInterface
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ArrayCollection
+     * @return ServiceJobReportCollection
      */
-    public function run(ServiceJob $serviceJob): ArrayCollection
+    public function run(ServiceJob $serviceJob): ServiceJobReportCollection
     {
         $connection = $serviceJob->getConnection();
 
@@ -42,7 +43,7 @@ class TailCommand implements CommandInterface
             $connection->getPassword()
         ];
 
-        $reports = new ArrayCollection();
+        $reports = new ServiceJobReportCollection();
 
         foreach ($files as $file) {
             $report = $this->execRemoteFileContent($file, $params);
@@ -52,7 +53,12 @@ class TailCommand implements CommandInterface
         return $reports;
     }
 
-    private function execRemoteFileContent($file, array $params)
+    /**
+     * @param $file
+     * @param array $params
+     * @return ServiceJobReport
+     */
+    private function execRemoteFileContent($file, array $params): ServiceJobReport
     {
         $remoteFileCommand = new RemoteCommand();
 

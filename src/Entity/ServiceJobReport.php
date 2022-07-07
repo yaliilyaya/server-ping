@@ -23,7 +23,7 @@ class ServiceJobReport implements
     /**
      * @var ServiceJob|null
      * @see ServiceJob::reports
-     * @ManyToOne(targetEntity="App\Entity\ServiceCommand", inversedBy="reports")
+     * @ManyToOne(targetEntity="App\Entity\ServiceJob", inversedBy="reports")
      */
     private $job;
 
@@ -54,6 +54,22 @@ class ServiceJobReport implements
     public function setResult(string $result): void
     {
         $this->result = $result;
+    }
+
+    /**
+     * @return ServiceJob|null
+     */
+    public function getJob(): ?ServiceJob
+    {
+        return $this->job;
+    }
+
+    /**
+     * @param ServiceJob|null $job
+     */
+    public function setJob(?ServiceJob $job): void
+    {
+        $this->job = $job;
     }
 
     /**

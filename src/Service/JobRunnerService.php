@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Collection\ServiceJobReportCollection;
 use App\Entity\ServiceJob;
 use App\Entity\ServiceJobReport;
 use App\Enum\StatusEnum;
@@ -22,9 +23,9 @@ class JobRunnerService
 
     /**
      * @param ServiceJob $serviceJob
-     * @return ArrayCollection
+     * @return ServiceJobReportCollection
      */
-    public function run(ServiceJob $serviceJob): ArrayCollection
+    public function run(ServiceJob $serviceJob): ServiceJobReportCollection
     {
         $command = $serviceJob->getCommand();
 
