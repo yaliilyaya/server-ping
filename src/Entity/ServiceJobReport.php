@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 
 /**
- * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobRepository::class)
+ * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobReportRepository::class)
  */
 class ServiceJobReport implements
     IdentifierInterface,
@@ -19,6 +19,14 @@ class ServiceJobReport implements
 {
     use IdentifierTrait;
     use StatusTrait;
+
+    /**
+     * @var ServiceJob|null
+     * @see ServiceJob::reports
+     * @ManyToOne(targetEntity="App\Entity\ServiceCommand", inversedBy="reports")
+     */
+    private $job;
+
 
     /**
      * @var string

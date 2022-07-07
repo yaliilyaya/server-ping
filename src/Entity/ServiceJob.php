@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass=\App\Repository\ServiceJobRepository::class)
@@ -41,6 +42,12 @@ class ServiceJob implements
      * @ManyToOne(targetEntity="App\Entity\ServiceCommand", inversedBy="jobs")
      */
     private $command;
+    /**
+     * @var Collection|ServiceJobReport[]
+     * @see ServiceJobReport::job
+     * @OneToMany(targetEntity="\App\Entity\ServiceJobReport", mappedBy="job", fetch="EXTRA_LAZY")
+     */
+    private $reports;
 
     public function __construct()
     {
