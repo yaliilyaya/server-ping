@@ -76,7 +76,7 @@ class TailCommand implements CommandInterface
     {
         $remoteFileCommand = new RemoteCommand();
 
-        $remoteFileCommand->setCommandAttribute(['tail', '-n 10', $file]);
+        $remoteFileCommand->setCommandAttribute(['tail', '-n 500', $file]);
         $remoteFileCommand->setConnectParam($params);
 
         return $this->commandRunnerService->run($remoteFileCommand);
