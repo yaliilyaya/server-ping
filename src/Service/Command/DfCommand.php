@@ -36,7 +36,7 @@ class DfCommand implements CommandInterface
 
         $remoteFileCommand = new RemoteCommand();
 
-        $remoteFileCommand->setCommandAttribute(['df', '-h']);
+        $remoteFileCommand->setCommandAttribute(['df', '-HTa']);
         $remoteFileCommand->setConnectParam([
             $connection->getUser(),
             $connection->getIp(),
