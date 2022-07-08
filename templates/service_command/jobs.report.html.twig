@@ -25,9 +25,14 @@
                 <div class="col-md-6">
                     <div class="card card-{{job.status}}">
                         <div class="card-header">
-                            <h3 class="card-title">#{{ job.id }}-{{report.id}} {{ job.connection.name }} - {{ job.connection.ip }}</h3>
+                            <h3 class="card-title">
+                                <a href="{{ path('service-job.index', {'id': job.id}) }}">#{{ job.id }}-{{report.id}}</a>
+                                <a href="{{ path('service-connection.index', {'id': job.connection.id}) }}">{{ job.connection.name }} - {{ job.connection.ip }}</a>
+                            </h3>
                             <div class="card-tools">
                                 <div class="btn-group">
+                                    <a href="{{ path('service-job.report', {'id': job.id}) }}"
+                                       class="btn btn-{{job.status}} btn-sm">Full report</a>
                                     <a href="{{ path('service-job.ready-to-run', {'id': job.id}) }}"
                                        class="btn btn-{{job.status}} btn-sm">Ready to run</a>
                                     <a href="{{ path('service-job.run', {'id': job.id}) }}"
@@ -36,7 +41,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <pre>{{ report.result }}</pre>
+                            <pre style="max-height: 600px; overflow: scroll">{{ report.result }}</pre>
                         </div>
                     </div>
                 </div>
