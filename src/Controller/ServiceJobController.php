@@ -247,7 +247,9 @@ class ServiceJobController extends AbstractController
 
         echo "<pre>" . $serviceJob->getResult() . "</pre>";
 
+        /** @var ServiceJobReport $report */
         foreach ($serviceJob->getReports() as $report) {
+            echo "<pre>" . $report->getCommand() . "</pre>";
             echo "<pre>" . $report->getResult() . "</pre>";
         }
 

@@ -32,11 +32,15 @@ class CommandRunnerService
      */
     public function run(CommandInterface $command): ServiceJobReport
     {
+        $stringCommand = implode(" ", $command->getCommand());
+
         $process = new Process($command->getCommand());
+
+        $report = $this->serviceJobReportRepository->create();
+        $report->setCommand($stringCommand);
 
         try {
             $process->mustRun();
-            $report = $this->serviceJobReportRepository->create();
             $report->setStatus(StatusEnum::SUCCESS_TYPE);
             $report->setResult($process->getOutput());
         } catch (ProcessFailedException $exception) {
@@ -44,7 +48,6 @@ class CommandRunnerService
                 . PHP_EOL
                 . $exception->getTraceAsString();
 
-            $report = $this->serviceJobReportRepository->create();
             $report->setStatus(StatusEnum::ERROR_TYPE);
             $report->setResult($message);
         }

@@ -27,6 +27,11 @@ class ServiceJobReport implements
      */
     private $job;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $command;
 
     /**
      * @var string
@@ -38,6 +43,23 @@ class ServiceJobReport implements
     {
         $this->setStatus(StatusEnum::DEFAULT_TYPE);
         $this->setResult('');
+        $this->setCommand('');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommand(): string
+    {
+        return $this->command;
+    }
+
+    /**
+     * @param string $command
+     */
+    public function setCommand(string $command): void
+    {
+        $this->command = $command;
     }
 
     /**
