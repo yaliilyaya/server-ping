@@ -49,3 +49,6 @@ services:
     command.tail:
         class: App\Service\Command\TailCommand
         public: true
+    command.history:
+        class: App\Service\Command\HistoryCommand
+        public: true
