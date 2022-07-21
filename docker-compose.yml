@@ -7,9 +7,7 @@ services:
     build:
       context: dockerfile/app
       dockerfile: Dockerfile
-#    image: digitalocean.com/php
     restart: unless-stopped
-    tty: true
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -22,9 +20,7 @@ services:
     build:
       context: dockerfile/app
       dockerfile: Dockerfile
-    #    image: digitalocean.com/php
     restart: unless-stopped
-    tty: true
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -38,18 +34,16 @@ services:
   webserver:
     image: nginx:alpine
     restart: unless-stopped
-    tty: true
-#      - "443:443"
     volumes:
       - ./:/project
       - ./dockerfile/webserver/conf.d/:/etc/nginx/conf.d/
     networks:
       project_net:
-        ipv4_address: 11.132.10.80
+        ipv4_address: ${WEBSERVICE_IP}
 networks:
   project_net:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 11.132.10.0/24
+        - subnet: ${PROJECT_BRIDGE_MASK}
