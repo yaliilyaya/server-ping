@@ -16,6 +16,8 @@ services:
     volumes:
       - ./:/project
       - .ssh:/root/.ssh
+    networks:
+      project_net:
   run-first:
     build:
       context: dockerfile/app
@@ -30,15 +32,24 @@ services:
       - ./:/project
       - .ssh:/root/.ssh
     command: "bin/console  service-job:run-first"
-
+    networks:
+      project_net:
   #Nginx Service
   webserver:
     image: nginx:alpine
     restart: unless-stopped
     tty: true
-    ports:
-      - ${WEBSERVICE_HTTP_PORT}:80
 #      - "443:443"
     volumes:
       - ./:/project
       - ./dockerfile/webserver/conf.d/:/etc/nginx/conf.d/
+    networks:
+      project_net:
+        ipv4_address: 11.132.10.80
+networks:
+  project_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 11.132.10.0/24
