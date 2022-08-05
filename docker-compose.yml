@@ -1,7 +1,6 @@
 version: '3'
 #https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose-ru
 services:
-
   #PHP Service
   app:
     build:
@@ -47,3 +46,4 @@ networks:
       driver: default
       config:
         - subnet: ${PROJECT_BRIDGE_MASK}
+          gateway: ${PROJECT_BRIDGE_GATEWAY}
